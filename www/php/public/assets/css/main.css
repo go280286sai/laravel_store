@@ -12,6 +12,12 @@ body {
 	min-width: 320px;
     padding-top: 135px;
 }
+.cart_removed{
+    cursor: pointer;
+}
+
+
+
 
 img{
 	max-width: 100%;

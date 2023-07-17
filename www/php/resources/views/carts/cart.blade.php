@@ -52,7 +52,5 @@
                 <td>{{$total_price.' грн.'}}</td>
         </table>
     </div>
-
-
 @endsection
 

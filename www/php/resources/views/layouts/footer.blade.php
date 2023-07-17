@@ -50,6 +50,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                @if(count(\Illuminate\Support\Facades\Session::get('cart')??[])>0)
                     <div id="cart">
                     </div>
                     <div>
@@ -63,9 +64,20 @@
                                 <td id="get_sum"></td>
                         </table>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">Продолжить покупки</button>
+                        <button type="button" class="btn btn-primary">Оформить заказ</button>
+                        <a href="/cart/clearCart"><div class="btn btn-danger">Очистить корзину</div></a>
+                    </div>
+                @else
+                    <p>Корзина пуста</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">Продолжить покупки</button>
+                    </div>
+                @endif
+
                     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
                             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-
                     <script>
                         $(document).ready(function () {
                             update_cart()
@@ -94,11 +106,11 @@
                          <td>${carts[cart].price}</td>
                          <td>
                          <input type="number" style="width: 50px"  id="update_${carts[cart].id}" value="${carts[cart].qty}" />
-                         <input type="button" value="Обновить" class="btn btn-success" onclick="update(${carts[cart].id})">
+                       <img src="{{env('APP_URL')}}/assets/img/update.png" alt="" class="cart_removed" onclick="update(${carts[cart].id})" title="Обновить">
                          </td>
                          <td>${carts[cart].price * carts[cart].qty}</td>
                          <td>
-                         <input type="button" value="Удалить" class="btn btn-danger" onclick="remove(${carts[cart].id})">
+                             <img src="{{env('APP_URL')}}/assets/img/cart.png" alt="" class="cart_removed" onclick="remove(${carts[cart].id})" title="Удалить">
                          </td>
                          </tr>`
                                     }
@@ -106,7 +118,7 @@
                                     $('#cart').html(body);
                                     $('#get_sum').text(total_price + ' грн');
                                     $('#get_count').text(total_qty + ' шт.');
-                                    $('#cart-count').text(total_qty);
+                                    $('#cart-count').text({{count(\Illuminate\Support\Facades\Session::get('cart')??[])}});
                                 },
                             })
                         }
@@ -147,10 +159,6 @@
                         }
                     </script>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger ripple" data-bs-dismiss="modal">Продолжить покупки</button>
-                <button type="button" class="btn btn-primary">Оформить заказ</button>
             </div>
         </div>
     </div>

@@ -54,14 +54,17 @@ class Product extends Model
         return true;
     }
 
-    public function add_to_cart(Product $product): void
+    public function add_to_cart(Product $product): string
     {
         if (Session::has('cart')) {
             $products = Session::get('cart');
             foreach ($products as $item) {
-                if ($item->id == $product->id) {
+                if ($item->id == $product->id && $item->qty < $product->amount) {
                   self::updateCart($item->id, $item->qty + 1);
-                    return;
+                    return "Max count";
+                } else if ($item->id == $product->id && $item->qty >= $product->amount) {
+                    self::updateCart($item->id, $product->amount);
+                    return "Max count";
                 }
             }
         } else {
@@ -69,6 +72,7 @@ class Product extends Model
         }
         $products[] = $product;
         Session::put('cart', $products);
+        return "Success";
     }
 
     public static function removeCart(int $id): void
@@ -91,5 +95,22 @@ class Product extends Model
                     return;
                 }
             }
+    }
+
+    public static function translate()
+    {
+        $products = self::join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
+            ->select('products.id', 'title')
+            ->where('language_id', Language::getStatus()->id)
+            ->get();
+        $cart = Session::get('cart');
+        foreach ($cart as $item) {
+            foreach ($products as $product) {
+                if ($item->id == $product->id) {
+                    $item->title = $product->title;
+                }
+            }
+        }
+        Session::put('cart', $cart);
     }
 }

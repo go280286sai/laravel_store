@@ -51,8 +51,12 @@ Route::controller(CartController::class)->group(function () {
    Route::get('/cart/get', 'getAll')->name('cart.get');
    Route::get('/cart/remove', 'remove')->name('cart.remove');
    Route::match(['GET', 'POST'],'/cart/update', 'editAmount')->name('cart.update');
+    Route::get('/cart/add', 'add')->name('cart.add');
 });
-Route::get('/cart/add', [CartController::class, 'add']);
+Route::get('/cart/clearCart', function (){
+   \Illuminate\Support\Facades\Session::remove('cart');
+   return redirect()->route('home');
+});
 Route::get('/product/{slug}', [ProductController::class, 'view'])->name('product');
 Route::get('/lang/{lang}', function ($lang) {
     \Illuminate\Support\Facades\Cache::put('lang', $lang);

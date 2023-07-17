@@ -89,6 +89,7 @@
                 },
                 success: function (data) {
                     $('#cart-count').text({{count(\Illuminate\Support\Facades\Session::get('cart')??[])}});
+                    window.location.reload();
                     console.log(data);
                 },
                 error: function (data) {

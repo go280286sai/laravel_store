@@ -25,7 +25,7 @@ class CartController extends Controller
     }
 
     public function getAll()
-    {
+    {   Product::translate();
         return Response::json(Session::get('cart'));
     }
 

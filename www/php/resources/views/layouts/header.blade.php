@@ -16,7 +16,6 @@
                         </div>
                     </form>
                     <a href="#" class="open-search"><i class="fas fa-search"></i></a>
-
                     <a href="/cart" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge bg-danger rounded-pill count-items"><b id="cart-count"></b></span>
