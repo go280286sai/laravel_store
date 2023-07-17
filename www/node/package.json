@@ -1,0 +1,19 @@
+{
+  "name": "ms_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "graphql": "^16.7.1",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.3.0"
+  }
+}

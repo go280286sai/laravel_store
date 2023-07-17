@@ -1,0 +1,144 @@
+version: '3'
+
+services:
+#     web:
+#       build: ./nginx
+#       container_name: learn_nginx
+#       volumes:
+#         - ./www/php:/usr/share/nginx/html
+#       restart: unless-stopped
+#       ports:
+#         - "8082:80"
+#       environment:
+#         - NGINX_HOST=localhost
+#         - NGINX_PORT=80
+     learn_mysql:
+       build: ./mysql
+       container_name: learn_mysql
+       environment:
+         MYSQL_ROOT_PASSWORD: masterkey
+         MYSQL_DATABASE: learn_mysql
+       ports:
+         - "3282:3306"
+       volumes:
+         - learn-db:/var/lib/mysql
+#    phpmyadmin:
+#      image: phpmyadmin/phpmyadmin:latest
+#      restart: always
+#      ports:
+#        - '8088:80'
+#      environment:
+#        PMA_ARBITRARY: 0
+#        PMA_HOST: 'learn_mysql'
+#        MYSQL_ROOT_PASSWORD: 'masterkey'
+#      depends_on:
+#        - learn_mysql
+#     nodejs:
+#       image: node:18-alpine
+#       container_name: nodejs
+#       restart: unless-stopped
+#       ports:
+#         - "5000:5004"
+#       volumes:
+#         - ./www/node:/usr/src/app
+#       working_dir: /usr/src/app
+#       command: npm run start
+     apache:
+       build: ./apache
+       container_name: apache
+       volumes:
+         - ./www/php:/var/www/html
+       ports:
+         - "8084:80"
+       environment:
+         WEB_DOCUMENT_ROOT: /var/www/html/public
+         WEB_DOCUMENT_INDEX: index.php
+         PHP_MEMORY_LIMIT: 1024M
+         PHP_UPLOAD_MAX_FILESIZE: 512M
+         PHP_POST_MAX_SIZE: 512M
+         PHP_DISPLAY_ERRORS: 1
+         php.xdebug.max_nesting_level: 500
+         XDEBUG_CONFIG: "xdebug.mode=debug"
+         XDEBUG_MODE: coverage
+#     memcached:
+#       image: 'memcached:alpine'
+#       ports:
+#         - '11211:11211'
+     redis:
+       image: 'redis:alpine'
+       ports:
+        - '6379:6379'
+  #  mongo:
+#      image: mongo:6.0.6
+#      ports:
+#        - 27017:27017
+#      volumes:
+#        - learn-db:/data/db
+#      environment:
+#        MONGO_INITDB_ROOT_USERNAME: root
+#        MONGO_INITDB_ROOT_PASSWORD: masterkey
+#    django:
+#      build: ./www/django
+#      container_name: django
+#      command: python manage.py runserver 0.0.0.0:8000
+#      volumes:
+#        - ./www/django:/usr/src/app/
+#      ports:
+#        - "8000:8000"
+#   fastapi:
+#     build: ./www/fastapi
+#     container_name: fastapi
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./www/fastapi:/code
+#   flask:
+#     build: ./www/flask
+#     container_name: flask
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./www/flask:/app
+#    postgres:
+#      image: postgres:14-alpine
+#      container_name: postgres
+#      restart: always
+#      ports:
+#        - "5432:5432"
+#      environment:
+#        - POSTGRES_USER=root
+#        - POSTGRES_PASSWORD=masterkey
+#        - POSTGRES_DB=django_dev
+#    pgadmin4:
+#      image: fenglc/pgadmin4
+#      container_name: pgadmin4
+#      restart: always
+#      volumes:
+#        - ./postgres:/var/lib/pgadmin
+#      environment:
+#          PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+#          PGADMIN_DEFAULT_PASSWORD: admin
+#      ports:
+#        - "5050:5050"
+#    adminer:
+#      image: adminer
+#      restart: always
+#      ports:
+#        - "8086:8080"
+#    rebbitmq:
+#      image: rabbitmq:3-management
+#      ports:
+#        - "5672:5672"
+#        - "15672:15672"
+##      login: guest
+##      password: guest
+#     go:
+#       build: www/go
+#       container_name: GOLANG
+#       environment: # Pass environment variables to the service
+#         REDIS_URL: redis:6379
+#       ports:
+#         - "8080:8080"
+#       restart: unless-stopped
+volumes:
+  learn-db:
