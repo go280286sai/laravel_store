@@ -12,16 +12,17 @@
                     <div class="col-lg-4 col-sm-6 mb-3">
                         <div class="product-card">
                             <div class="product-tumb">
-                                <a href="/product/{{$product->slug}}"><img src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
+                                <a href="/product/{{$product->product_id}}"><img src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
                                                             alt=""></a>
                             </div>
                             <div class="product-details">
-                                <h4><a href="/product/{{$product->slug}}">{{$product->title}}</a></h4>
+                                <h4><a href="/product/{{$product->product_id}}">{{$product->title}}</a></h4>
                                 <p>{{$product->exerpt}}</p>
                                 <div class="product-bottom-details d-flex justify-content-between">
                                     <div class="product-price"><small>{{$product->old_price>0?$product->old_price:''}}</small>{{$product->price}}</div>
+                                    <input type="hidden" id="input-quantity" value="1">
                                     <div class="product-links">
-                                        <a href="/cart/add?id={{$product->id}}&qty=1" class="add-to-cart" data-id="{{$product->id}}"><i class="fas fa-shopping-cart"></i></a>
+                                        <a href="/cart/add?id={{$product->product_id}}&qty=1" class="add-to-cart" data-id="{{$product->product_id}}"><i class="fas fa-shopping-cart"></i></a>
                                         <a href="#"><i class="far fa-heart"></i></a>
                                     </div>
                                 </div>
@@ -77,7 +78,7 @@
             e.preventDefault();
             const $this = $(this);
             const id = $this.data('id');
-            const qty = $('#input-quantity').val()?$('#input-quantity').val():1;
+            const qty = $('#input-quantity').val();
             console.log(id, qty);
 
             $.ajax({

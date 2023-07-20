@@ -16,7 +16,7 @@ class AddProductsSeeder extends Seeder
         for ($j = 1; $j <= 3; $j++) {
             for ($i = 1; $i <= 5; $i++) {
                 $obj = new Product();
-                $obj->category_id = $j;
+                $obj->category_id = $i;
                 $obj->slug = 'Category-cat-' . $i;
                 $obj->price = 10*$i;
                 $obj->old_price = 10*$i-5;
@@ -24,6 +24,7 @@ class AddProductsSeeder extends Seeder
                 $obj->hit = 1;
                 $obj->img = 'uploads/img/no-image.jpg';
                 $obj->is_download = 1;
+                $obj->amount = 10;
                 $obj->save();
             }
         }

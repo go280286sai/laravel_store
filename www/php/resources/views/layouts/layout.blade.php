@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{env('APP_URL')}}/assets/css/main.css">
     <link rel="icon" href="{{env('APP_URL')}}/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
     <meta name="keywords" content="{{isset($keywords)?env('APP_NAME').'::'.$keywords:env('APP_NAME').'::'.__('messages.keywords')}}">
     <meta name="description" content="{{isset($description)?env('APP_NAME').'::'.$description:env('APP_NAME').'::'.__('messages.description')}}">
     <title>{{isset($title)?env('APP_NAME').'::'.$title:env('APP_NAME').'::'.__('messages.main')}}</title>

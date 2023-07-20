@@ -57,10 +57,14 @@ Route::get('/cart/clearCart', function (){
    \Illuminate\Support\Facades\Session::remove('cart');
    return redirect()->route('home');
 });
-Route::get('/product/{slug}', [ProductController::class, 'view'])->name('product');
+Route::get('/product/{id}', [ProductController::class, 'view'])->name('product');
 Route::get('/lang/{lang}', function ($lang) {
     \Illuminate\Support\Facades\Cache::put('lang', $lang);
     return redirect()->back();
 //    return redirect()->route('home');
 });
+Route::get('/404', function (){
+    return view('layouts.404');
+});
+Route::get('/category/{id}', [ProductController::class, 'category'])->name('category');
 require __DIR__.'/auth.php';
