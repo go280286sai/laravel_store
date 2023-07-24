@@ -3,35 +3,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-6">
-                    <h4>Информация</h4>
+                    <h4>{{__('messages.information')}}</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#">Главная</a></li>
-                        <li><a href="#">О магазине</a></li>
-                        <li><a href="#">Оплата и доставка</a></li>
-                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">{{__('messages.main')}}</a></li>
+                        <li><a href="#">{{__('messages.about')}}</a></li>
+                        <li><a href="#">{{__('messages.delivery')}}</a></li>
+                        <li><a href="#">{{__('messages.contacts')}}</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3 col-6">
-                    <h4>Время работы</h4>
+                    <h4>{{__('messages.work_time')}}</h4>
                     <ul class="list-unstyled">
-                        <li>г. Киев, ул. Пушкина, 10</li>
-                        <li>пн-вс: 9:00 - 18:00</li>
-                        <li>без перерыва</li>
+                        <li>{{__('messages.address')}}</li>
+                        <li>{{__('messages.graph')}}</li>
+                        <li>{{__('messages.reset_time')}}</li>
                     </ul>
                 </div>
 
                 <div class="col-md-3 col-6">
                     <h4>Контакты</h4>
                     <ul class="list-unstyled">
-                        <li><a href="tel:5551234567">555 123-45-67</a></li>
-                        <li><a href="tel:5551234567">555 123-45-68</a></li>
-                        <li><a href="tel:5551234567">555 123-45-69</a></li>
+                        <li><a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></li>
+                        <li><a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></li>
+                        <li><a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3 col-6">
-                    <h4>Мы в сети</h4>
+                    <h4>{{__('messages.social')}}</h4>
                     <div class="footer-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
@@ -46,7 +46,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Корзина</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{__('messages.cart')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -56,108 +56,27 @@
                     <div>
                         <table class="table">
                             <tr class="table-dark">
-                                <td>Всего количество товара:</td>
+                                <td>{{__('messages.all_products')}}</td>
                                 <td id="get_count"></td>
                             </tr>
                             <tr class="table-dark">
-                                <td>На общую сумму</td>
+                                <td>{{__('messages.total')}}</td>
                                 <td id="get_sum"></td>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">Продолжить покупки</button>
-                        <button type="button" class="btn btn-primary">Оформить заказ</button>
-                        <a href="/cart/clearCart"><div class="btn btn-danger">Очистить корзину</div></a>
+                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">{{__('messages.continue')}}</button>
+                        <button type="button" class="btn btn-primary">{{__('messages.order')}}</button>
+                        <a href="/cart/clearCart"><div class="btn btn-danger">{{__('messages.clean_cart')}}</div></a>
                     </div>
                 @else
-                    <p>Корзина пуста</p>
+                    <p>{{__('messages.empty_cart')}}</p>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">Продолжить покупки</button>
+                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="window.location.reload();">{{__('messages.continue')}}</button>
                     </div>
                 @endif
 
-                    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-                            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-                    <script>
-                        $(document).ready(function () {
-                            update_cart()
-                        });
 
-                        function update_cart() {
-                            let total_price = 0;
-                            let total_qty = 0;
-                            $.ajax({
-                                url: '/cart/get',
-                                type: 'GET',
-                                success: function (data) {
-                                    const carts = data;
-                                    let body = `<table class="table table-hover">
-                          <tr class="table-dark">
-                          <th>Название</th>
-                          <th>Цена</th>
-                          <th>Количество</th>
-                          <th colspan="2">Сумма</th>
-                          </tr>`;
-                                    for (let cart in carts) {
-                                        total_qty += carts[cart].qty;
-                                        total_price += carts[cart].price * carts[cart].qty;
-                                        body += ` <tr class="table-light">
-                         <td>${carts[cart].title}</td>
-                         <td>${carts[cart].price}</td>
-                         <td>
-                         <input type="number" style="width: 50px"  id="update_${carts[cart].id}" value="${carts[cart].qty}" />
-                       <img src="{{env('APP_URL')}}/assets/img/update.png" alt="" class="cart_removed" onclick="update(${carts[cart].id})" title="Обновить">
-                         </td>
-                         <td>${carts[cart].price * carts[cart].qty}</td>
-                         <td>
-                             <img src="{{env('APP_URL')}}/assets/img/cart.png" alt="" class="cart_removed" onclick="remove(${carts[cart].id})" title="Удалить">
-                         </td>
-                         </tr>`
-                                    }
-                                    body += `</table>`;
-                                    $('#cart').html(body);
-                                    $('#get_sum').text(total_price + ' грн');
-                                    $('#get_count').text(total_qty + ' шт.');
-                                    $('#cart-count').text({{count(\Illuminate\Support\Facades\Session::get('cart')??[])}});
-                                },
-                            })
-                        }
-
-                        function remove(id) {
-                            $.ajax({
-                                url: '/cart/remove',
-                                type: 'GET',
-                                data: {
-                                    id: id
-                                },
-                                success: function () {
-                                    update_cart()
-                                },
-                                error: function (data) {
-                                    console.log(data);
-                                }
-                            })
-                        }
-
-                        function update(id) {
-                            const qty = $(`#update_${id}`).val();
-                            console.log(qty);
-                            $.ajax({
-                                url: '/cart/update',
-                                type: 'GET',
-                                data: {
-                                    id: id,
-                                    qty: qty
-                                },
-                                success: function () {
-                                    update_cart()
-                                },
-                                error: function (data) {
-                                    console.log(data);
-                                }
-                            })
-                        }
-                    </script>
 
             </div>
         </div>

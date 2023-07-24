@@ -18,7 +18,10 @@ class Language extends Model
         return $this->hasMany(Product_description::class);
     }
 
-    public static function getStatus()
+    /**
+     * @return object
+     */
+    public static function getStatus(): object
     {
         $lang = app()->getLocale();
         return self::where('code', $lang)->get()[0];

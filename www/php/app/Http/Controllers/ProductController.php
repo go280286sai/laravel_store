@@ -8,6 +8,7 @@ use App\Models\Main_category;
 use App\Models\Product;
 use App\Models\Product_gallery;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -15,7 +16,7 @@ class ProductController extends Controller
     {
         $product = Product::getView($id);
         $images = Product_gallery::get($id);
-        if(count($product) == 0){
+        if (count($product) == 0) {
             abort(404);
         }
         return view('products.product', [
@@ -25,14 +26,21 @@ class ProductController extends Controller
         ]);
     }
 
-    public function category(int $id)
+    public function category(int $id): View
     {
         $categories = Category::find($id);
-//        dd($category->products[0]->product_description);
         return view('products.category', [
             'categories' => $categories
         ]);
-}
+    }
+
+    public function parent(int $id): View
+    {
+        $parent = Main_category::find($id);
+        return view('products.parent', [
+            'parent' => $parent
+        ]);
+    }
 
 
 }

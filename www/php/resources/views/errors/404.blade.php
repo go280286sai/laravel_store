@@ -1,5 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-   not found
+   <div class="container img_404">
+
+   </div>
 @endsection

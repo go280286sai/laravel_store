@@ -22,9 +22,9 @@
 
             <ul class="list-unstyled">
                 @if($product->status == 1)
-                <li><i class="fas fa-check text-success"></i> В наличии</li>
+                <li><i class="fas fa-check text-success"></i>{{__('messages.is_set')}}</li>
                 @else
-                <li><i class="fas fa-shipping-fast text-muted"></i> Ожидается</li>
+                <li><i class="fas fa-shipping-fast text-muted"></i>{{__('messages.to_wait')}}</li>
                 @endif
                 <li><i class="fas fa-hand-holding-usd"></i> <span class="product-price"><small>{{$product->old_price}}</small>{{$product->price}}</li>
             </ul>
@@ -32,7 +32,7 @@
             <div id="product">
                 <div class="input-group mb-3">
                     <input id="input-quantity" type="number" class="form-control" name="quantity" value="1">
-                    <button class="btn btn-danger add-to-cart"  type="button" data-id="{{$product->product_id}}">Купить</button>
+                    <button class="btn btn-danger add-to-cart"  type="button" data-id="{{$product->product_id}}">{{__('messages.to_buy')}}</button>
                 </div>
             </div>
         </div>

@@ -106,15 +106,17 @@ class Product extends Model
             ->select('products.id', 'title')
             ->where('language_id', Language::getStatus()->id)
             ->get();
-        $cart = Session::get('cart');
-        foreach ($cart as $item) {
-            foreach ($products as $product) {
-                if ($item->id == $product->id) {
-                    $item->title = $product->title;
+        if(Session::has('cart')){
+            $cart = Session::get('cart');
+            foreach ($cart as $item) {
+                foreach ($products as $product) {
+                    if ($item->id == $product->id) {
+                        $item->title = $product->title;
+                    }
                 }
             }
+            Session::put('cart', $cart);
         }
-        Session::put('cart', $cart);
     }
 
     public static function product(int $id, array $select=['products.id', 'title', 'price', 'slug', 'img', 'amount']): object

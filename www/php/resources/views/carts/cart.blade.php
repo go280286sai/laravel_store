@@ -12,10 +12,10 @@
     <div>
         <table class="table table-hover">
             <tr class="table-dark">
-                <th>Название</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th colspan="2">Сумма</th>
+                <th>{{__('messages.title')}}</th>
+                <th>{{__('messages.price')}}</th>
+                <th>{{__('messages.quantity')}}</th>
+                <th colspan="2">{{__('messages.sum')}}</th>
             </tr>
             @foreach($carts as $cart)
                     <?php $total_qty += $cart->qty;
@@ -25,31 +25,30 @@
                     <td>{{$cart->title}}</td>
                     <td>{{$cart->price}}</td>
                     <td>
-                        <form action="/cart/update">
+                        <form action="{{env('APP_URL')}}/cart/update">
                             <input type="number" name="qty" style="width: 50px" value="{{$cart->qty}}"/>
                             <input type="hidden" name="id" value="{{$cart->id}}">
                             @csrf
-                            <input type="submit" value="Обновить" class="btn btn-success">
+                            <input type="submit" value="{{__('messages.update')}}" class="btn btn-success">
                         </form>
                     </td>
                     <td>{{$cart->price * $cart->qty}}</td>
                     <td>
-                        <a href="/cart/remove?{{'id='.$cart->id}}"><div class="btn btn-danger">Удалить</div></a>
+                        <a href="{{env('APP_URL')}}/cart/remove?{{'id='.$cart->id}}"><div class="btn btn-danger">{{__('messages.remove')}}</div></a>
                     </td>
                 </tr>
             @endforeach
         </table>
     </div>
     <div>
-
         <table class="table">
             <tr class="table-dark">
-                <td>Всего количество товара:</td>
+                <td>{{__('messages.all_products')}}</td>
                 <td>{{$total_qty.' шт.'}}</td>
             </tr>
             <tr class="table-dark">
-                <td>На общую сумму: </td>
-                <td>{{$total_price.' грн.'}}</td>
+                <td>{{__('messages.total')}}</td>
+                <td>{{$total_price.' '.env('APP_MONEY')}}</td>
         </table>
     </div>
 @endsection
