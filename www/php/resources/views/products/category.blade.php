@@ -6,8 +6,18 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-light p-2">
                 <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/parent/'.$categories->main_categories->id}}">{{$categories->main_categories->title}}</a></li>
-                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/category/'.$categories->id}}">{{$categories->title}}</a></li>
+                @foreach($categories->category_descriptions as $category)
+                    @if($category->language_id == $lang)
+
+                        <li class="breadcrumb-item"><a href="{{env('APP_URL').'/parent/'.$categories->main_id}}">
+                                {{\App\Models\Main_description::getDescription(6)[0]->title}}
+                            </a></li>
+
+                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/category/'.$categories->id}}">
+                       {{$category->title}}
+                    </a></li>
+                    @endif
+                @endforeach
             </ol>
         </nav>
     </div>
@@ -24,29 +34,29 @@
             </thead>
             <tbody>
 
-            @foreach($categories->products as $category)
-
+            @foreach($categories->category_descriptions as $category)
+                @foreach($categories->products as $product)
+                   @foreach($product->product_descriptions as $product_description)
+                       @if($category->language_id == $lang && $product_description->language_id==$lang)
+                           <td>
+                               <a href="/product/{{$product->slug}}">{{$product_description->title}}</a>
+                           </td>
+                           <td>
+                               {{$category->title}}</td>
+                           <td>{{$product->old_price}}</td>
+                           <td>{{$product->price}}</td>
+                           <td>
+                               @if($product->status == 1)
+                                   <i class="fas fa-check text-success"></i>
+                               @else
+                                   <i class="fas fa-shipping-fast text-muted"></i>
+                               @endif
+                           </td>
+                           </tr>
+                       @endif
+                   @endforeach
+                @endforeach
                 <tr>
-
-                    @foreach($category->product_descriptions as $product)
-                        @if($product->language_id == $lang)
-                            <td>
-                                <a href="/product/{{$product->product_id}}">{{$product->title}}</a>
-                            </td>
-                            <td>
-                                {{$categories->title}}</td>
-                            <td>{{$category->old_price}}</td>
-                            <td>{{$category->price}}</td>
-                            <td>
-                                @if($category->status == 1)
-                                    <i class="fas fa-check text-success"></i>
-                                @else
-                                    <i class="fas fa-shipping-fast text-muted"></i>
-                                @endif
-                            </td>
-                </tr>
-                @endif
-            @endforeach
             @endforeach
             </tbody>
             <tfoot>

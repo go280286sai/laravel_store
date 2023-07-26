@@ -25,4 +25,9 @@ class Main_description extends Model
     {
         return $this->belongsTo(Language::class);
     }
+
+    public static function getDescription(int $id)
+    {
+        return self::where('main_id', $id)->where('language_id', Language::getStatus()->id)->get();
+    }
 }

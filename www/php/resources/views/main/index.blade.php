@@ -12,21 +12,31 @@
                     <div class="col-lg-4 col-sm-6 mb-3">
                         <div class="product-card">
                             <div class="product-tumb">
-                                <a href="/product/{{$product->product_id}}"><img src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
-                                                            alt=""></a>
+                                <a href="/product/{{$product->id}}"><img
+                                        src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
+                                        alt=""></a>
                             </div>
-                            <div class="product-details">
-                                <h4><a href="/product/{{$product->product_id}}">{{$product->title}}</a></h4>
-                                <p>{{$product->exerpt}}</p>
-                                <div class="product-bottom-details d-flex justify-content-between">
-                                    <div class="product-price"><small>{{$product->old_price>0?$product->old_price:''}}</small>{{$product->price}}</div>
-                                    <input type="hidden" id="input-quantity" value="1">
-                                    <div class="product-links">
-                                        <a href="/cart/add?id={{$product->product_id}}&qty=1" class="add-to-cart" data-id="{{$product->product_id}}"><i class="fas fa-shopping-cart" title="{{__('messages.add_to_cart')}}"></i></a>
-                                        <a href="#"><i class="far fa-heart" title="{{__('messages.to_favorite')}}"></i></a>
+                            @foreach($product->product_descriptions as $description)
+                                @if($description->language_id == $lang)
+                                    <div class="product-details">
+                                        <h4><a href="/product/{{$product->id}}">{{$description->title}}</a></h4>
+                                        <p>{{$description->exerpt}}</p>
+                                        <div class="product-bottom-details d-flex justify-content-between">
+                                            <div class="product-price">
+                                                <small>{{$product->old_price>0?$product->old_price:''}}</small>{{$product->price}}
+                                            </div>
+                                            <input type="hidden" id="input-quantity" value="1">
+                                            <div class="product-links">
+                                                <a href="/cart/add?id={{$product->id}}&qty=1" class="add-to-cart"
+                                                   data-id="{{$product->id}}"><i class="fas fa-shopping-cart"
+                                                                                 title="{{__('messages.add_to_cart')}}"></i></a>
+                                                <a href="#"><i class="far fa-heart"
+                                                               title="{{__('messages.to_favorite')}}"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 @endforeach

@@ -85,24 +85,31 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            @foreach(\App\Models\Category::getList() as $main)
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{$main->title}}
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @foreach($main->categories as $category)
-                                            @if($category->language_id == $lang)
-                                                <li><a class="dropdown-item"
-                                                       href="{{env('APP_URL').'/category/'.$category->id}}">{{$category->title}}</a>
-                                                </li>
+                            @foreach($mains as $main)
+                                @foreach($main->main_descriptions as $main_description)
+                                    @if($main_description->language_id == $lang)
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{$main_description->title}}
                                             @endif
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            @foreach($main->categories as $category)
+                                                @foreach($category->category_descriptions as $category_description)
+                                                    @if($category_description->language_id == $lang)
+                                                        <li><a class="dropdown-item"
+                                                               href="{{env('APP_URL').'/category/'.$category_description->category_id}}">{{$category_description->title}}</a>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
                             @endforeach
                         </ul>
                     </div>
