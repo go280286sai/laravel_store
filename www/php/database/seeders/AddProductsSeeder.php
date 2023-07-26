@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\Product_description;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Random\Randomizer;
 
 class AddProductsSeeder extends Seeder
 {
@@ -13,20 +15,20 @@ class AddProductsSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($j = 1; $j <= 3; $j++) {
-            for ($i = 1; $i <= 5; $i++) {
-                $obj = new Product();
-                $obj->category_id = $i;
-                $obj->slug = 'Category-cat-' . $i;
-                $obj->price = 10*$i;
-                $obj->old_price = 10*$i-5;
-                $obj->status = 1;
-                $obj->hit = 1;
-                $obj->img = 'uploads/img/no-image.jpg';
-                $obj->is_download = 1;
-                $obj->amount = 10;
-                $obj->save();
-            }
-        }
+       for ($i=1; $i<=36; $i++){
+           for($j=1; $j<=6; $j++){
+               $price = rand(100, 1000);
+               $obj = new Product();
+               $obj->category_id = $i;
+               $obj->slug='slug_'.$i.'_'.$j;
+               $obj->price =$price;
+               $obj->old_price = $price - $price * 0.2;
+               $obj->status = 1;
+               $obj->hit = 1;
+               $obj->img = 'uploads/img/no-image.jpg';
+               $obj->amount = 10;
+               $obj->save();
+           }
+       }
     }
 }

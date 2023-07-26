@@ -34,7 +34,7 @@ class Product extends Model
     /**
      * @return HasMany
      */
-    public function product_descriptions()
+    public function product_descriptions(): HasMany
     {
         return $this->hasMany(Product_description::class);
     }

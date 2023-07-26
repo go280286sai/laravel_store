@@ -19,6 +19,22 @@ class Language extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function category_descriptions(): HasMany
+    {
+        return $this->hasMany(Category_description::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function main_descriptions(): HasMany
+    {
+        return $this->hasMany(Main_description::class);
+    }
+
+    /**
      * @return object
      */
     public static function getStatus(): object

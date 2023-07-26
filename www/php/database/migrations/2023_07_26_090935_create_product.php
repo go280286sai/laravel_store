@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -19,9 +20,9 @@ return new class extends Migration {
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('hit')->default(0);
             $table->string('img')->default('uploads/img/no-image.jpg');
-            $table->string('is_download')->default(0);
-            $table->timestamps();
+            $table->integer('amount')->default(0);
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->timestamps();
         });
     }
 

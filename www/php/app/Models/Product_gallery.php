@@ -10,6 +10,10 @@ class Product_gallery extends Model
 {
     use HasFactory;
 
+    public function products(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+}
     /**
      * @param int $id
      * @param string $img

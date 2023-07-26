@@ -14,27 +14,34 @@ class Category extends Model
     use HasFactory;
 
     /**
+     * @return BelongsTo
+     */
+    public function mains(): BelongsTo
+    {
+        return $this->belongsTo(Main::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function category_descriptions(): HasMany
+    {
+        return $this->hasMany(Category_description::class);
+    }
+
+    /**
      * @return HasMany
      */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function main_categories(): BelongsTo
-    {
-        return $this->belongsTo(Main_category::class, 'main_category_id', 'id');
-    }
-
     /**
      * @return Collection
      */
     public static function getList(): Collection
     {
-        return Main_category::all();
+        return Main_category::where('language_id', Language::getStatus()->id)->get();
     }
 
     /**

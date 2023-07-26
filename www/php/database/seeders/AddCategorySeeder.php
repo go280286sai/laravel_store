@@ -13,14 +13,10 @@ class AddCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        for ($j = 1; $j <= 3; $j++) {
-            for ($i = 1; $i <= 5; $i++) {
+        for ($i=1; $i<=6; $i++){
+            for ($j=1; $j<=6; $j++){
                 $obj = new Category();
-                $obj->language_id = $j;
-                $obj->title = 'Category ' . $i;
-                $obj->description = 'Description ' . $i;
-                $obj->keywords = 'Keywords ' . $i;
-                $obj->content = 'Content ' . $i;
+                $obj->main_id = $i;
                 $obj->save();
             }
         }
