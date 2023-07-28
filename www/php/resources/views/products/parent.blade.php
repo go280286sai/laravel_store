@@ -12,14 +12,15 @@
             @foreach($parent->categories as $category)
                 @foreach($category->category_descriptions as $description)
 
-                @endforeach
+
                 <tr>
                         @if($description->language_id == $lang)
                             <td>
-                                <a href="/category/{{$description->id}}">{{$description->title}}</a>
+                                <a href="/category/{{$category->id}}">{{$description->title}}</a>
                             </td>
                 </tr>
                 @endif
+                @endforeach
             @endforeach
             </tbody>
         </table>

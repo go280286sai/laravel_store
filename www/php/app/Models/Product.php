@@ -49,7 +49,7 @@ class Product extends Model
             $products = Session::get('cart');
             foreach ($products as $product) {
                 if ($product->id == $is_product->id) {
-                    (($product->qty + $qty)<=$amount)? $product->qty += $qty:$product->qty = $amount;
+                    (($product->qty + $qty) <= $amount) ? $product->qty += $qty : $product->qty = $amount;
                     Session::put('cart', $products);
                     return "Success";
                 }
@@ -115,13 +115,30 @@ class Product extends Model
         }
     }
 
-//    public static function getView(int $id)
-//    {
-//        return Main_category::join('categories', 'categories.id', '=', 'main_categories.id')
-//            ->join('products', 'products.category_id', '=', 'categories.id')
-//            ->join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
-//            ->select('main_categories.title as main_title', 'categories.title as category_title', 'products.id', 'product_descriptions.product_id', 'product_descriptions.title as title', 'price', 'slug', 'img', 'old_price')
-//            ->where('product_descriptions.product_id', $id)
-//            ->where('product_descriptions.language_id', Language::getStatus()->id)->get();
-//    }
+    public static function get_category(int $id): array
+    {
+        $obj = self::find($id);
+        $arr = array();
+        $arr['category_id'] = $obj->category_id;
+        foreach ($obj->product_descriptions as $product) {
+            if ($product->language_id == Language::getStatus()->id) {
+                $arr['title_product'] = $product->title;
+            }
+        }
+        return $arr;
+    }
+
+    public static function get_path_product(int $id): array
+    {
+        $path = array();
+        $path['product_id']=$id;
+        $products=Product::get_category($id);
+        $path['title_product'] = $products['title_product'];
+        $path['category_id'] = $products['category_id'];
+        $category = Category::get_main($products['category_id']);
+        $path['main_id'] = $category['main_id'];
+        $path['title_category'] = $category['title_category'];
+        $path['title_main'] = Main::get_title($category['main_id']);
+        return $path;
+    }
 }

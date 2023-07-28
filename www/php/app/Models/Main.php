@@ -37,4 +37,14 @@ class Main extends Model
         }
         return $list;
     }
+
+    public static function get_title(int $id)
+    {
+        $obj = self::find($id);
+        foreach ($obj->main_descriptions as $main_description) {
+            if($main_description->language_id == Language::getStatus()->id){
+                return $main_description->title;
+            }
+        }
+    }
 }

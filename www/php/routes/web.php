@@ -18,18 +18,28 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//---------------------------------------------------------------------------
+//Cart controller
 Route::controller(CartController::class)->group(function () {
-    Route::get('/cart', 'index')->name('cart');
     Route::get('/cart/get', 'getAll')->name('cart.get');
     Route::get('/cart/remove', 'remove')->name('cart.remove');
-    Route::match(['GET', 'POST'],'/cart/update', 'update')->name('cart.update');
+    Route::get('/cart/update', 'update')->name('cart.update');
     Route::get('/cart/add', 'add')->name('cart.add');
+    Route::get('/cart/clear', 'clear')->name('cart.clear');
 });
-
+//----------------------------------------------------------------------------
+//Main controller
 Route::controller(\App\Http\Controllers\MainController::class)->group(function () {
     Route::get('/', 'index')->name('home');
 });
+//----------------------------------------------------------------------------
+//Product controller
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/product/{id}', 'view')->name('product');
+    Route::get('/parent/{id}', 'parent')->name('parent');
+    Route::get('/category/{id}', 'category')->name('category');
+});
+//---------------------------------------------------------------------------
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -40,27 +50,34 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-
-Route::get('/cart/clearCart', function (){
-   \Illuminate\Support\Facades\Session::remove('cart');
-   return redirect()->route('home');
+//------------------------------------------------------------------
+//Page is not found
+Route::get('/404', function (){
+    return view('layouts.404');
 });
-Route::get('/product/{id}', [ProductController::class, 'view'])->name('product');
-Route::get('/parent/{id}', [ProductController::class, 'parent'])->name('parent');
+//------------------------------------------------------------------
+//Select language
 Route::get('/lang/{lang}', function ($lang) {
     \Illuminate\Support\Facades\Cache::put('lang', $lang);
     return redirect()->back();
 });
+//------------------------------------------------------------------
+//Get count in cart
 Route::get('/cart_reload', function (){
    if(\Illuminate\Support\Facades\Session::has('cart')){
        return count(\Illuminate\Support\Facades\Session::get('cart'));
    }
     return 0;
 });
-Route::get('/404', function (){
-    return view('layouts.404');
+//------------------------------------------------------------------
+Route::get('/test', function (){
+$product=9;
+$products=\App\Models\Product::get_category($product);
+echo $products['title_product'];
+$main = \App\Models\Category::get_main($products['category_id']);
+echo $main['title_category'];
+echo \App\Models\Main::get_title($main['main_id']);
+dd($main['main_id']);
+
 });
-Route::get('/category/{id}', [ProductController::class, 'category'])->name('category');
 require __DIR__.'/auth.php';

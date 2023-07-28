@@ -30,4 +30,9 @@ class Main_description extends Model
     {
         return self::where('main_id', $id)->where('language_id', Language::getStatus()->id)->get();
     }
+
+    public function get_title(int $id)
+    {
+        return self::find($id)->title;
+    }
 }

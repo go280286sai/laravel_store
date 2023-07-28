@@ -3,37 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUpdateRequest;
-use App\Models\Language;
 use App\Models\Product;
 use Exception;
-
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
-use Illuminate\View\View;
 
 class CartController extends Controller
 {
     /**
-     * @return View
+     * Get all entries from cart given language selection
+     * @return JsonResponse
+     * @author Aleksander Storchak <go280286sai@gmail.com>
      */
-    public function index(): View
+    public function getAll(): JsonResponse
     {
-        $carts = Session::get('cart');
-        return view('carts.cart', ['carts' => $carts]);
-    }
-
-    public function getAll()
-    {   Product::translate();
+        Product::translate();
         return Response::json(Session::get('cart'));
     }
 
-    public function add(AddUpdateRequest $request): JsonResponse|RedirectResponse
+    /**
+     * Add to cart
+     * @param AddUpdateRequest $request
+     * @return JsonResponse
+     * @throws Exception
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function add(AddUpdateRequest $request): JsonResponse
     {
         $id = $request->input('id');
         $qty = $request->input('qty');
@@ -41,30 +39,46 @@ class CartController extends Controller
         if (!$product) {
             throw new Exception('Product not found');
         }
-        if($request->ajax()) {
-            return Response::json(['status'=>true]);
-        }
-        return redirect()->back();
+        return Response::json(['status' => true]);
     }
 
-    public function remove(Request $request): JsonResponse|RedirectResponse
+    /**
+     * Remove from cart
+     * @param Request $request
+     * @return JsonResponse
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function remove(Request $request): JsonResponse
     {
         $id = $request->input('id');
         Product::removeCart($id);
-        if ($request->ajax()) {
-            return Response::json(['status'=>true]);
-        }
-        return redirect()->back();
+        return Response::json(['status' => true]);
     }
 
-    public function update(AddUpdateRequest $request): JsonResponse|RedirectResponse
+    /**
+     * Update cart
+     * @param AddUpdateRequest $request
+     * @return JsonResponse
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function update(AddUpdateRequest $request): JsonResponse
     {
         $id = $request->input('id');
         $qty = $request->input('qty');
         Product::updateCart($id, $qty);
-        if ($request->ajax()) {
-            return Response::json(['status'=>true]);
-        }
-        return redirect()->back();
+        return Response::json(['status' => true]);
+
+    }
+
+    /**
+     * Remove all items from cart
+     * Remove session cart
+     * @return RedirectResponse
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function clear(): RedirectResponse
+    {
+        Session::remove('cart');
+        return redirect()->route('home');
     }
 }

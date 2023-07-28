@@ -5,35 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\Main;
-use App\Models\Main_category;
 use App\Models\Product;
-use App\Models\Product_gallery;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function view(string $slug)
+    /**
+     * Get selected product
+     * @param string $slug
+     * @return View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function view(string $slug): View
     {
-        $product = Product::where('slug', $slug)->get();
-        if (count($product) == 0) {
+        $product = Product::where('slug', $slug)->first();
+        if ($product == null) {
             abort(404);
         }
+        $path = Product::get_path_product($product->id);
         return view('products.product', [
-            'product' => $product[0],
-            'lang'=>Language::getStatus()->id
+            'product' => $product,
+            'lang'=>Language::getStatus()->id,
+            'path'=> $path
         ]);
     }
 
+    /**
+     * Get selected category
+     * @param int $id
+     * @return View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
     public function category(int $id): View
     {
         $categories = Category::find($id);
+        $path = Category::get_path_category($categories->id);
         return view('products.category', [
-            'categories' => $categories
+            'categories' => $categories,
+            'path' => $path
         ]);
     }
 
+    /**
+     * Get main category
+     * @param int $id
+     * @return View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
     public function parent(int $id): View
     {   $lang = Language::getStatus()->id;
         $parent = Main::find($id);
@@ -42,6 +61,4 @@ class ProductController extends Controller
             'lang' => $lang
         ]);
     }
-
-
 }

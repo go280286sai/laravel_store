@@ -52,4 +52,25 @@ class Category extends Model
     {
         return self::find($id);
     }
+
+    public static function get_main(int $id): array
+    {
+        $obj = self::find($id);
+        $arr = array();
+        $arr['main_id'] = $obj->main_id;
+        foreach ($obj->category_descriptions as $item) {
+            $arr['title_category'] = $item->title;
+        }
+        return $arr;
+    }
+    public static function get_path_category(int $id): array
+    {
+        $path = array();
+        $path['category_id'] = $id;
+        $category = Category::get_main($id);
+        $path['main_id'] = $category['main_id'];
+        $path['title_category'] = $category['title_category'];
+        $path['title_main'] = Main::get_title($category['main_id']);
+        return $path;
+    }
 }

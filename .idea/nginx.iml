@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/www/php/var/cache/dev" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/www/wp-includes" isTestSource="false" packagePrefix="PHPMailer" />
       <sourceFolder url="file://$MODULE_DIR$/www/php" isTestSource="false" packagePrefix="app" />
-      <sourceFolder url="file://$MODULE_DIR$/www/php" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/www/php" isTestSource="false" packagePrefix="app" />
       <sourceFolder url="file://$MODULE_DIR$/www/php/src_" isTestSource="false" packagePrefix="App" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />

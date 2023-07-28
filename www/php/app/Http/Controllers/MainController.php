@@ -4,18 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use App\Models\Product;
-use App\Models\Product_description;
 use App\Models\Slider;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class MainController extends Controller
 {
     /**
+     * Get main page
      * @return View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function index(): View
     {
@@ -31,22 +29,17 @@ class MainController extends Controller
     }
 
     /**
-     * @param string $lang
+     * Get a set of records by hits
      * @param int $limit
      * @return object
+     * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function get_hits(int $limit): object
     {
-//        return Product::join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
-//            ->where('language_id', $lang)
-//            ->where('hit', '=', 1)
-//            ->orderBy('hit', 'DESC')
-//            ->limit($limit)
-//            ->get();
-        if(Cache::has('hit')){
+        if (Cache::has('hit')) {
             return Cache::get('hit');
-        } else{
-           $hit = Product::where('hit', '>', 0)
+        } else {
+            $hit = Product::where('hit', '>', 0)
                 ->orderBy('hit', 'DESC')
                 ->limit($limit)
                 ->get();
