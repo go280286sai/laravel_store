@@ -12,14 +12,14 @@
                     <div class="col-lg-4 col-sm-6 mb-3">
                         <div class="product-card">
                             <div class="product-tumb">
-                                <a href="/product/{{$product->id}}"><img
+                                <a href="/product/{{$product->slug}}"><img
                                         src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
                                         alt=""></a>
                             </div>
                             @foreach($product->product_descriptions as $description)
                                 @if($description->language_id == $lang)
                                     <div class="product-details">
-                                        <h4><a href="/product/{{$product->id}}">{{$description->title}}</a></h4>
+                                        <h4><a href="/product/{{$product->slug}}">{{$description->title}}</a></h4>
                                         <p>{{$description->exerpt}}</p>
                                         <div class="product-bottom-details d-flex justify-content-between">
                                             <div class="product-price">
@@ -78,30 +78,4 @@
     </section>
 @endsection
 @section('js')
-    <script>
-        $('.add-to-cart').on('click', function (e) {
-            e.preventDefault();
-            const $this = $(this);
-            const id = $this.data('id');
-            const qty = $('#input-quantity').val();
-            console.log(id, qty);
-
-            $.ajax({
-                url: '/cart/add',
-                type: 'GET',
-                data: {
-                    id: id,
-                    qty: qty
-                },
-                success: function (data) {
-                    $('#cart-count').text({{count(\Illuminate\Support\Facades\Session::get('cart')??[])}});
-                    window.location.reload();
-                    console.log(data);
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            })
-        })
-    </script>
 @endsection

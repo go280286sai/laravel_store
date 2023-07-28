@@ -26,8 +26,6 @@
 @section('content')
 @show
 
-
-
 <button id="top">
     <i class="fas fa-angle-double-up"></i>
 </button>
@@ -41,85 +39,16 @@
 <script src="{{env('APP_URL')}}/assets/js/jquery.magnific-popup.min.js"></script>
 <script>
     $(document).ready(function () {
-        update_cart()
+        update_cart("{{app()->getLocale()}}");
+        cart_reload();
     });
-
-    function update_cart() {
-        let total_price = 0;
-        let total_qty = 0;
-        $.ajax({
-            url: '/cart/get',
-            type: 'GET',
-            success: function (data) {
-                const carts = data;
-                let body = `<table class="table table-hover">
-                          <tr class="table-dark">
-                          <th>{{__('messages.title')}}</th>
-                          <th>{{__('messages.price')}}</th>
-                          <th>{{__('messages.quantity')}}</th>
-                          <th colspan="2">{{__('messages.sum')}}</th>
-                          </tr>`;
-                for (let cart in carts) {
-                    total_qty += carts[cart].qty;
-                    total_price += carts[cart].price * carts[cart].qty;
-                    body += ` <tr class="table-light">
-                         <td>${carts[cart].title}</td>
-                         <td>${carts[cart].price}</td>
-                         <td>
-                         <input type="number" style="width: 50px"  id="update_${carts[cart].id}" value="${carts[cart].qty}" />
-                       <img src="{{env('APP_URL')}}/assets/img/update.png" alt="" class="cart_removed" onclick="update(${carts[cart].id})" title="{{__('messages.update')}}">
-                         </td>
-                         <td>${carts[cart].price * carts[cart].qty}</td>
-                         <td>
-                             <img src="{{env('APP_URL')}}/assets/img/cart.png" alt="" class="cart_removed" onclick="remove(${carts[cart].id})" title="{{__('messages.remove')}}">
-                         </td>
-                         </tr>`
-                }
-                body += `</table>`;
-                $('#cart').html(body);
-                $('#get_sum').text(total_price + ` {{env('APP_MONEY')}}`);
-                $('#get_count').text(total_qty + ` {{env('APP_COUNT')}}`);
-                $('#cart-count').text({{count(\Illuminate\Support\Facades\Session::get('cart')??[])}});
-            },
-        })
-    }
-
-    function remove(id) {
-        $.ajax({
-            url: '/cart/remove',
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function () {
-                update_cart()
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        })
-    }
-
-    function update(id) {
-        const qty = $(`#update_${id}`).val();
-        console.log(qty);
-        $.ajax({
-            url: '/cart/update',
-            type: 'GET',
-            data: {
-                id: id,
-                qty: qty
-            },
-            success: function () {
-                update_cart()
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        })
-    }
 </script>
-
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/add_to_cart.js')}}"></script>
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/cart_update.js')}}"></script>
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/update_cart_modal.js')}}"></script>
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/cart_reload.js')}}"></script>
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/is_cart.js')}}"></script>
+<script src="{{\Illuminate\Support\Facades\Storage::url('/assets/js/cart_remove.js')}}"></script>
 @section('js')
 @show
 </body>

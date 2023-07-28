@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddUpdateRequest;
 use App\Models\Language;
 use App\Models\Product;
 use Exception;
@@ -18,6 +19,9 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         $carts = Session::get('cart');
@@ -29,15 +33,11 @@ class CartController extends Controller
         return Response::json(Session::get('cart'));
     }
 
-    public function add(Request $request): JsonResponse|RedirectResponse
+    public function add(AddUpdateRequest $request): JsonResponse|RedirectResponse
     {
-        $this->validate($request, [
-            'id' => 'required|numeric',
-            'qty' => 'required|numeric',
-        ]);
         $id = $request->input('id');
         $qty = $request->input('qty');
-        $product = Product::getProducts($id, $qty);
+        $product = Product::add_to_cart($id, $qty);
         if (!$product) {
             throw new Exception('Product not found');
         }
@@ -57,7 +57,7 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function editAmount(Request $request): JsonResponse|RedirectResponse
+    public function update(AddUpdateRequest $request): JsonResponse|RedirectResponse
     {
         $id = $request->input('id');
         $qty = $request->input('qty');

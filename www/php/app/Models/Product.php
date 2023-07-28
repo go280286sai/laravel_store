@@ -31,6 +31,7 @@ class Product extends Model
     {
         return $this->hasMany(Product_gallery::class);
     }
+
     /**
      * @return HasMany
      */
@@ -39,74 +40,69 @@ class Product extends Model
         return $this->hasMany(Product_description::class);
     }
 
-    /**
-     * @param int $id
-     * @param int $qty
-     * @return bool
-     */
-    public static function getProducts(int $id, int $qty): bool
+    public static function add_to_cart($id, $qty): string
     {
-        $product = self::product($id);
-        if ($qty > $product[0]->amount) {
-            $product[0]->qty = $product[0]->amount;
-        }  else {
-            $product[0]->qty = $qty;
-        }
-        $obj = new self();
-        $obj->add_to_cart($product[0]);
-        return true;
-    }
-
-    public function add_to_cart(Product $product): string
-    {
-        if (Session::has('cart')) {
+        $is_product = Product::find($id);
+        $amount = $is_product->amount;
+        $amount < $qty ? $qty = $amount : $qty;
+        if (Session::has('cart') && Session::get('cart') != []) {
             $products = Session::get('cart');
-            foreach ($products as $item) {
-                if ($item->id == $product->id && $item->qty < $product->amount) {
-                  self::updateCart($item->id, $item->qty + 1);
-                    return "Max count";
-                } else if ($item->id == $product->id && $item->qty >= $product->amount) {
-                    self::updateCart($item->id, $product->amount);
-                    return "Max count";
+            foreach ($products as $product) {
+                if ($product->id == $is_product->id) {
+                    (($product->qty + $qty)<=$amount)? $product->qty += $qty:$product->qty = $amount;
+                    Session::put('cart', $products);
+                    return "Success";
                 }
             }
+            $is_product->qty = $qty;
+            $products[] = $is_product;
+            Session::put('cart', $products);
+            return "Success";
         } else {
             $products = array();
+            $is_product->qty = $qty;
+            $products[] = $is_product;
+            Session::put('cart', $products);
         }
-        $products[] = $product;
-        Session::put('cart', $products);
         return "Success";
     }
 
     public static function removeCart(int $id): void
     {
-            $products = Session::get('cart');
-            $filteredArray = array_filter($products, function ($item) use ($id) {
-                return $item['id'] !== $id;
-            });
-            $updatedArray = array_values($filteredArray);
+        $products = Session::get('cart');
+        $filteredArray = array_filter($products, function ($item) use ($id) {
+            return $item['id'] !== $id;
+        });
+        $updatedArray = array_values($filteredArray);
         Session::put('cart', $updatedArray);
     }
 
+    /**
+     * @param int $id
+     * @param int $qty
+     * @return void
+     */
     public static function updateCart(int $id, int $qty): void
     {
-            $products = Session::get('cart');
-            foreach ($products as $item) {
-                if ($item->id == $id) {
-                    $item->qty = $qty;
-                    Session::put('cart', $products);
-                    return;
-                }
+        $products = Session::get('cart');
+        foreach ($products as $product) {
+            if ($product['id'] == $id) {
+                $product['qty'] = $qty;
             }
+        }
+        Session::put('cart', $products);
     }
 
-    public static function translate()
+    /**
+     * @return void
+     */
+    public static function translate(): void
     {
         $products = self::join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
             ->select('products.id', 'title')
             ->where('language_id', Language::getStatus()->id)
             ->get();
-        if(Session::has('cart')){
+        if (Session::has('cart')) {
             $cart = Session::get('cart');
             foreach ($cart as $item) {
                 foreach ($products as $product) {
@@ -119,21 +115,13 @@ class Product extends Model
         }
     }
 
-    public static function product(int $id, array $select=['products.id', 'title', 'price', 'slug', 'img', 'amount']): object
-    {
-        return self::join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
-            ->select($select)
-            ->where('products.id', $id)
-            ->where('language_id', Language::getStatus()->id)
-            ->get();
-    }
-    public static function getView(int $id)
-    {
-        return Main_category::join('categories', 'categories.id', '=', 'main_categories.id')
-            ->join('products', 'products.category_id', '=', 'categories.id')
-            ->join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
-            ->select('main_categories.title as main_title', 'categories.title as category_title','products.id','product_descriptions.product_id', 'product_descriptions.title as title', 'price', 'slug', 'img', 'old_price')
-            ->where('product_descriptions.product_id', $id)
-            ->where('product_descriptions.language_id', Language::getStatus()->id)->get();
-    }
+//    public static function getView(int $id)
+//    {
+//        return Main_category::join('categories', 'categories.id', '=', 'main_categories.id')
+//            ->join('products', 'products.category_id', '=', 'categories.id')
+//            ->join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
+//            ->select('main_categories.title as main_title', 'categories.title as category_title', 'products.id', 'product_descriptions.product_id', 'product_descriptions.title as title', 'price', 'slug', 'img', 'old_price')
+//            ->where('product_descriptions.product_id', $id)
+//            ->where('product_descriptions.language_id', Language::getStatus()->id)->get();
+//    }
 }

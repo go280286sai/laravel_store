@@ -45,7 +45,7 @@
                         @endif
 
                     </div>
-
+                    <input type="hidden" name="lang" id="lang" value="{{app()->getLocale()}}">
                     <div class="dropdown d-inline-block">
                         <a href="/lang/{{app()->getLocale()}}" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{{env('APP_URL')}}/assets/img/{{app()->getLocale()}}.png" alt="Language"

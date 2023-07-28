@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\Main;
 use App\Models\Main_category;
 use App\Models\Product;
 use App\Models\Product_gallery;
@@ -34,10 +35,11 @@ class ProductController extends Controller
     }
 
     public function parent(int $id): View
-    {
-        $parent = Main_category::find($id);
+    {   $lang = Language::getStatus()->id;
+        $parent = Main::find($id);
         return view('products.parent', [
-            'parent' => $parent
+            'parent' => $parent,
+            'lang' => $lang
         ]);
     }
 
