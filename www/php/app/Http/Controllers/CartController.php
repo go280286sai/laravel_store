@@ -80,7 +80,7 @@ class CartController extends Controller
      */
     public function clear(): RedirectResponse
     {
-        Session::remove('cart');
+        Product::clear();
 
         return redirect()->route('home');
     }

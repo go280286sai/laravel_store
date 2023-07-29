@@ -79,8 +79,12 @@ class Product extends Model
     public static function updateCart(int $id, int $qty): void
     {
         $products = Session::get('cart');
+
         foreach ($products as $product) {
             if ($product['id'] == $id) {
+                $is_product = Product::find($id);
+                $amount = $is_product->amount;
+                $amount < $qty ? $qty = $amount : $qty;
                 $product['qty'] = $qty;
             }
         }
@@ -142,5 +146,14 @@ class Product extends Model
         $path['title_main'] = Main::get_title($category['main_id']);
 
         return $path;
+    }
+
+    /**
+     * @return void
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public static function clear(): void
+    {
+        Session::remove('cart');
     }
 }
