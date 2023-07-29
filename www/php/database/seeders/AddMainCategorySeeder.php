@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Main;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddMainCategorySeeder extends Seeder
@@ -13,7 +12,7 @@ class AddMainCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i=0; $i<=5; $i++){
+        for ($i = 0; $i <= 5; $i++) {
             $obj = new Main();
             $obj->save();
         }

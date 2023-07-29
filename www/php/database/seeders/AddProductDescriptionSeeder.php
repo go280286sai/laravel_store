@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Product_description;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddProductDescriptionSeeder extends Seeder
@@ -19,11 +18,11 @@ class AddProductDescriptionSeeder extends Seeder
                 $obj = new Product_description();
                 $obj->product_id = $j;
                 $obj->language_id = $i;
-                $obj->title = 'Product_'.$j.'_'.$lang[$i-1];
-                $obj->description = 'Description_'.$j.'_'.$lang[$i-1];
-                $obj->keywords = 'Keywords_'.$j.'_'.$lang[$i-1];
-                $obj->content = 'Content_'.$j.'_'.$lang[$i-1];
-                $obj->exerpt = 'Exerpt_'.$j.'_'.$lang[$i-1];
+                $obj->title = 'Product_'.$j.'_'.$lang[$i - 1];
+                $obj->description = 'Description_'.$j.'_'.$lang[$i - 1];
+                $obj->keywords = 'Keywords_'.$j.'_'.$lang[$i - 1];
+                $obj->content = 'Content_'.$j.'_'.$lang[$i - 1];
+                $obj->exerpt = 'Exerpt_'.$j.'_'.$lang[$i - 1];
                 $obj->save();
             }
         }

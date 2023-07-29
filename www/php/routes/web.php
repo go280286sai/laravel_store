@@ -3,7 +3,6 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,32 +51,34 @@ Route::middleware('auth')->group(function () {
 });
 //------------------------------------------------------------------
 //Page is not found
-Route::get('/404', function (){
+Route::get('/404', function () {
     return view('layouts.404');
 });
 //------------------------------------------------------------------
 //Select language
 Route::get('/lang/{lang}', function ($lang) {
     \Illuminate\Support\Facades\Cache::put('lang', $lang);
+
     return redirect()->back();
 });
 //------------------------------------------------------------------
 //Get count in cart
-Route::get('/cart_reload', function (){
-   if(\Illuminate\Support\Facades\Session::has('cart')){
-       return count(\Illuminate\Support\Facades\Session::get('cart'));
-   }
+Route::get('/cart_reload', function () {
+    if (\Illuminate\Support\Facades\Session::has('cart')) {
+        return count(\Illuminate\Support\Facades\Session::get('cart'));
+    }
+
     return 0;
 });
 //------------------------------------------------------------------
-Route::get('/test', function (){
-$product=9;
-$products=\App\Models\Product::get_category($product);
-echo $products['title_product'];
-$main = \App\Models\Category::get_main($products['category_id']);
-echo $main['title_category'];
-echo \App\Models\Main::get_title($main['main_id']);
-dd($main['main_id']);
+Route::get('/test', function () {
+    $product = 9;
+    $products = \App\Models\Product::get_category($product);
+    echo $products['title_product'];
+    $main = \App\Models\Category::get_main($products['category_id']);
+    echo $main['title_category'];
+    echo \App\Models\Main::get_title($main['main_id']);
+    dd($main['main_id']);
 
 });
 require __DIR__.'/auth.php';

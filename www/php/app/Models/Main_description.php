@@ -10,28 +10,22 @@ class Main_description extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function mains(): BelongsTo
     {
         return $this->belongsTo(Main::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function languages(): BelongsTo
     {
         return $this->belongsTo(Language::class);
     }
 
-    public static function getDescription(int $id)
+    public static function getDescription(int $id): mixed
     {
         return self::where('main_id', $id)->where('language_id', Language::getStatus()->id)->get();
     }
 
-    public function get_title(int $id)
+    public function get_title(int $id): mixed
     {
         return self::find($id)->title;
     }

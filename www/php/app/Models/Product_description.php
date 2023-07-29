@@ -10,17 +10,11 @@ class Product_description extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);

@@ -10,17 +10,11 @@ class Category_description extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function languages(): BelongsTo
     {
         return $this->belongsTo(Language::class);

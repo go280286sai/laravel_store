@@ -16,12 +16,13 @@ class LangMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Cache::has('lang')) {
+        if (Cache::has('lang')) {
             app()->setLocale(Cache::get('lang'));
         } else {
             $lang = app()->getLocale();
             Cache::put('lang', $lang);
         }
+
         return $next($request);
     }
 }

@@ -11,26 +11,22 @@
             <tbody>
             @foreach($parent->categories as $category)
                 @foreach($category->category_descriptions as $description)
-
-
-                <tr>
+                    <tr>
                         @if($description->language_id == $lang)
                             <td>
                                 <a href="/category/{{$category->id}}">{{$description->title}}</a>
                             </td>
-                </tr>
-                @endif
+                    </tr>
+                    @endif
                 @endforeach
             @endforeach
             </tbody>
         </table>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script>
-        new DataTable('#example');
-    </script>
-
+    @section('js')
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script>
+            new DataTable('#example');
+        </script>
+    @endsection
 @endsection

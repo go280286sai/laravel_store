@@ -15,20 +15,21 @@ class CartController extends Controller
 {
     /**
      * Get all entries from cart given language selection
-     * @return JsonResponse
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function getAll(): JsonResponse
     {
         Product::translate();
+
         return Response::json(Session::get('cart'));
     }
 
     /**
      * Add to cart
-     * @param AddUpdateRequest $request
-     * @return JsonResponse
+     *
      * @throws Exception
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function add(AddUpdateRequest $request): JsonResponse
@@ -36,29 +37,29 @@ class CartController extends Controller
         $id = $request->input('id');
         $qty = $request->input('qty');
         $product = Product::add_to_cart($id, $qty);
-        if (!$product) {
+        if (! $product) {
             throw new Exception('Product not found');
         }
+
         return Response::json(['status' => true]);
     }
 
     /**
      * Remove from cart
-     * @param Request $request
-     * @return JsonResponse
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function remove(Request $request): JsonResponse
     {
         $id = $request->input('id');
         Product::removeCart($id);
+
         return Response::json(['status' => true]);
     }
 
     /**
      * Update cart
-     * @param AddUpdateRequest $request
-     * @return JsonResponse
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function update(AddUpdateRequest $request): JsonResponse
@@ -66,6 +67,7 @@ class CartController extends Controller
         $id = $request->input('id');
         $qty = $request->input('qty');
         Product::updateCart($id, $qty);
+
         return Response::json(['status' => true]);
 
     }
@@ -73,12 +75,13 @@ class CartController extends Controller
     /**
      * Remove all items from cart
      * Remove session cart
-     * @return RedirectResponse
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function clear(): RedirectResponse
     {
         Session::remove('cart');
+
         return redirect()->route('home');
     }
 }

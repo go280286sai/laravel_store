@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('layouts.layout', function ($view){
-        $mains = Main::list();
-        $view->with('mains', $mains);
-    });
+        View::composer('layouts.layout', function ($view) {
+            $mains = Main::list();
+            $view->with('mains', $mains);
+        });
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'main' => 'Главная страница',
     'description' => 'Описание',
@@ -51,6 +52,6 @@ return [
     'profile' => 'Профиль',
     'recovery_password' => 'Восстановить пароль',
     'forgot_password' => 'Forgot your password? No problem. Just let us know your email address and we will email you a
-                        password reset link that will allow you to choose a new one.'
+                        password reset link that will allow you to choose a new one.',
 
 ];

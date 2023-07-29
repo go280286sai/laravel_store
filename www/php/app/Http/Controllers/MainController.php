@@ -12,7 +12,7 @@ class MainController extends Controller
 {
     /**
      * Get main page
-     * @return View
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function index(): View
@@ -25,13 +25,13 @@ class MainController extends Controller
             Cache::put('sliders', $sliders);
         }
         $products = $this->get_hits(6);
+
         return view('main.index', compact(['sliders', 'products', 'lang']));
     }
 
     /**
      * Get a set of records by hits
-     * @param int $limit
-     * @return object
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function get_hits(int $limit): object
@@ -45,6 +45,7 @@ class MainController extends Controller
                 ->get();
             Cache::put('hit', $hit);
         }
+
         return $hit;
     }
 }

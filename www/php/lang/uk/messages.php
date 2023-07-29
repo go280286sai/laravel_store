@@ -1,4 +1,5 @@
 <?php
+
 return [
     'main' => 'Головна сторінка',
     'description' => 'Опис',

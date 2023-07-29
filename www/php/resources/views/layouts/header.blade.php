@@ -20,11 +20,7 @@
                     <a href="{{env('APP_URL')}}/cart" class="relative" data-bs-toggle="modal"
                        data-bs-target="#cart-modal">
                         <i class="fas fa-shopping-cart" title="{{__('messages.cart')}}"></i>
-                        @if(count(\Illuminate\Support\Facades\Session::get('cart')??[])==0)
-                            <span class="badge bg-danger rounded-pill count-items"><b id="cart-count">0</b></span>
-                        @else
-                            <span class="badge bg-danger rounded-pill count-items"><b id="cart-count"></b></span>
-                        @endif
+                        <span class="badge bg-danger rounded-pill count-items"><b id="cart-count"></b></span>
                     </a>
                     <a href="#"><i class="far fa-heart" title="{{__('messages.favorite')}}"></i></a>
                     <div class="dropdown d-inline-block">
@@ -40,10 +36,10 @@
                         @else
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="/login">{{__('messages.login')}}</a></li>
-                                <li><a class="dropdown-item" href="/register">{{__('messages.registration')}}   </a></li>
+                                <li><a class="dropdown-item" href="/register">{{__('messages.registration')}}   </a>
+                                </li>
                             </ul>
                         @endif
-
                     </div>
                     <input type="hidden" name="lang" id="lang" value="{{app()->getLocale()}}">
                     <div class="dropdown d-inline-block">
@@ -51,7 +47,6 @@
                             <img src="{{env('APP_URL')}}/assets/img/{{app()->getLocale()}}.png" alt="Language"
                                  title="{{__('messages.lang')}}">
                         </a>
-
                         <ul class="dropdown-menu" id="languages">
                             <li>
                                 <a href="/lang/uk">
@@ -91,26 +86,27 @@
                             @foreach($mains as $main)
                                 @foreach($main->main_descriptions as $main_description)
                                     @if($main_description->language_id == $lang)
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                               role="button"
+                                               data-bs-toggle="dropdown" aria-expanded="false">
                                                 {{$main_description->title}}
-                                            @endif
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            @foreach($main->categories as $category)
-                                                @foreach($category->category_descriptions as $category_description)
-                                                    @if($category_description->language_id == $lang)
-                                                        <li><a class="dropdown-item"
-                                                               href="{{env('APP_URL').'/category/'.$category_description->category_id}}">{{$category_description->title}}</a>
-                                                        </li>
-                                                    @endif
+                                                @endif
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                @foreach($main->categories as $category)
+                                                    @foreach($category->category_descriptions as $category_description)
+                                                        @if($category_description->language_id == $lang)
+                                                            <li><a class="dropdown-item"
+                                                                   href="{{env('APP_URL').'/category/'.$category_description->category_id}}">{{$category_description->title}}</a>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endforeach
-                            @endforeach
+                                            </ul>
+                                        </li>
+                                        @endforeach
+                                        @endforeach
                         </ul>
                     </div>
                 </div>

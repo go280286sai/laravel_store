@@ -13,11 +13,10 @@ class Product_gallery extends Model
     public function products(): BelongsTo
     {
         return $this->belongsTo(Product::class);
-}
+    }
+
     /**
-     * @param int $id
-     * @param string $img
-     * @return void
+     * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function add(int $id, string $img): void
     {
@@ -27,13 +26,9 @@ class Product_gallery extends Model
         $obj->save();
     }
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
     public static function get(int $id): mixed
     {
-    return self::where('product_id', $id)->get();
+        return self::where('product_id', $id)->get();
     }
 
     public function product(): BelongsTo

@@ -11,7 +11,6 @@
                         <li><a href="#">{{__('messages.contacts')}}</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 col-6">
                     <h4>{{__('messages.work_time')}}</h4>
                     <ul class="list-unstyled">
@@ -20,7 +19,6 @@
                         <li>{{__('messages.reset_time')}}</li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 col-6">
                     <h4>Контакты</h4>
                     <ul class="list-unstyled">
@@ -29,7 +27,6 @@
                         <li><a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 col-6">
                     <h4>{{__('messages.social')}}</h4>
                     <div class="footer-icons">
@@ -50,34 +47,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-{{--                @if(\Illuminate\Support\Facades\Session::get('cart')??[] != null)--}}
-                    <div id="cart">
-                    </div>
-{{--                    <div>--}}
-{{--                        <table class="table">--}}
-{{--                            <tr class="table-dark">--}}
-{{--                                <td>{{__('messages.all_products')}}</td>--}}
-{{--                                <td id="get_count"></td>--}}
-{{--                            </tr>--}}
-{{--                            <tr class="table-dark">--}}
-{{--                                <td>{{__('messages.total')}}</td>--}}
-{{--                                <td id="get_sum"></td>--}}
-{{--                        </table>--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="cart_reload()">{{__('messages.continue')}}</button>--}}
-{{--                        <button type="button" class="btn btn-primary">{{__('messages.order')}}</button>--}}
-{{--                        <a href="/cart/clearCart"><div class="btn btn-danger">{{__('messages.clean_cart')}}</div></a>--}}
-{{--                    </div>--}}
-{{--                @else--}}
-{{--                    <p>{{__('messages.empty_cart')}}</p>--}}
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-success ripple" data-bs-dismiss="modal" onclick="cart_reload()">{{__('messages.continue')}}</button>--}}
-{{--                    </div>--}}
-{{--                @endif--}}
-
-
-
+                <div id="cart">
+                </div>
             </div>
         </div>
     </div>
