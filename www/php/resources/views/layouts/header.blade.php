@@ -22,7 +22,7 @@
                         <i class="fas fa-shopping-cart" title="{{__('messages.cart')}}"></i>
                         <span class="badge bg-danger rounded-pill count-items"><b id="cart-count"></b></span>
                     </a>
-                    <a href="#"><i class="far fa-heart" title="{{__('messages.favorite')}}"></i></a>
+                    <a href="{{env('APP_URL')}}/wishlist"><i class="far fa-heart" title="{{__('messages.favorite')}}"></i></a>
                     <div class="dropdown d-inline-block">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="far fa-user" title="{{__('messages.user')}}"></i>

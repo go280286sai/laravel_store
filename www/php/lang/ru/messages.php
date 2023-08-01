@@ -31,6 +31,7 @@ return [
     'registration' => 'Регистрация',
     'favorite' => 'Избранное',
     'to_favorite' => 'В избранное',
+    'remove_favorite' => 'Удалить из избранного',
     'user' => 'Пользователь',
     'lang' => 'Язык',
     'previous' => 'Предыдущая',

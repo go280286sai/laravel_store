@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +38,14 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/{id}', 'view')->name('product');
     Route::get('/parent/{id}', 'parent')->name('parent');
     Route::get('/category/{id}', 'category')->name('category');
+});
+//---------------------------------------------------------------------------
+//WishlistController
+Route::controller(WishlistController::class)->group(function () {
+    Route::get('/wishlist', 'index')->name('wishlist');
+    Route::get('/wishlist/get', 'get')->name('wishlist.get');
+    Route::get('/wishlist/add', 'add')->name('wishlist.add');
+    Route::get('/wishlist/remove', 'remove')->name('wishlist.remove');
 });
 //---------------------------------------------------------------------------
 
