@@ -16,13 +16,26 @@
                             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
+
+
                     <a href="#" class="open-search"><i class="fas fa-search" title="{{__('messages.search')}}"></i></a>
+
+
                     <a href="{{env('APP_URL')}}/cart" class="relative" data-bs-toggle="modal"
                        data-bs-target="#cart-modal">
                         <i class="fas fa-shopping-cart" title="{{__('messages.cart')}}"></i>
                         <span class="badge bg-danger rounded-pill count-items"><b id="cart-count"></b></span>
                     </a>
-                    <a href="{{env('APP_URL')}}/wishlist"><i class="far fa-heart" title="{{__('messages.favorite')}}"></i></a>
+
+
+                    <a href="{{env('APP_URL')}}/wishlist" class="relative" 
+                       data-bs-target="#favorite-modal">
+                        <i class="fas fa-heart" title="{{__('messages.favorite')}}"></i>
+                        <span class="badge bg-danger rounded-pill count-items"><b id="favorite-count"></b></span>
+                    </a>
+
+
+
                     <div class="dropdown d-inline-block">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="far fa-user" title="{{__('messages.user')}}"></i>

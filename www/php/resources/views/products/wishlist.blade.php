@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="section-title txt_h2">{{__('messages.recommended_products')}}</h3>
+                    <h3 class="section-title txt_h2">{{__('messages.favorite')}}</h3>
                 </div>
 
                 @foreach($products as $product)

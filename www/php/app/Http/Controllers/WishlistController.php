@@ -13,15 +13,17 @@ use Illuminate\View\View;
 class WishlistController extends Controller
 {
     /**
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         if (Session::has('wishlist')) {
             $wishlists = Session::get('wishlist');
         } else {
             $wishlists = [];
         }
+
         return view('products.wishlist', ['products' => $wishlists, 'lang'=>Language::getStatus()->id]);
     }
 
