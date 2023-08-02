@@ -31,6 +31,7 @@ return [
     'registration' => 'Регистрация',
     'favorite' => 'Избранное',
     'to_favorite' => 'В избранное',
+    'remove_favorite' => 'Удалить из избранного',
     'user' => 'Пользователь',
     'lang' => 'Язык',
     'previous' => 'Предыдущая',
@@ -53,5 +54,6 @@ return [
     'recovery_password' => 'Восстановить пароль',
     'forgot_password' => 'Forgot your password? No problem. Just let us know your email address and we will email you a
                         password reset link that will allow you to choose a new one.',
+    'no_products'=>'Нет товаров',
 
 ];
