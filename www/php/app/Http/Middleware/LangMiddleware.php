@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class LangMiddleware
@@ -19,7 +20,12 @@ class LangMiddleware
         if (Cache::has('lang')) {
             app()->setLocale(Cache::get('lang'));
         } else {
-            $lang = app()->getLocale();
+            if (Cookie::has('lang')){
+                $lang = Cookie::get('lang');
+            } else {
+                $lang = app()->getLocale();
+                Cookie::queue('lang', $lang, 3600*24*7);
+            }
             Cache::put('lang', $lang);
         }
 
