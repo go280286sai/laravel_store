@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -83,5 +84,18 @@ class CartController extends Controller
         Product::clear();
 
         return redirect()->route('home');
+    }
+
+    /**
+     * @return View
+     */
+    public function store(): View
+    {
+        return view('products.cart');
+    }
+
+    public function create()
+    {
+        //pass
     }
 }

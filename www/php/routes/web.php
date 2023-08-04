@@ -26,6 +26,8 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/cart/update', 'update')->name('cart.update');
     Route::get('/cart/add', 'add')->name('cart.add');
     Route::get('/cart/clear', 'clear')->name('cart.clear');
+    Route::get('/cart/store', 'store')->name('product.store');
+    Route::post('/cart/create', 'create')->name('product.create');
 });
 //----------------------------------------------------------------------------
 //Main controller
@@ -48,17 +50,19 @@ Route::controller(WishlistController::class)->group(function () {
     Route::get('/wishlist/remove', 'remove')->name('wishlist.remove');
 });
 //---------------------------------------------------------------------------
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//ProfileController
+Route::controller(ProfileController::class)->middleware('auth')->group(function () {
+    Route::get('/client/dashboard', [ProfileController::class, 'index'])->name('profile.dashboard');
+    Route::get('/client/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/client/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/client/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/client/callback', [ProfileController::class, 'callback'])->name('profile.callback');
+    Route::get('/client/history', [ProfileController::class, 'history'])->name('profile.history');
+    Route::get('/client/messages', [ProfileController::class, 'messages'])->name('profile.messages');
+    Route::get('/client/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    Route::get('/client/index', [ProfileController::class, 'profile'])->name('profile.profile');
 });
-//------------------------------------------------------------------
+//----------------------------------------------------------------------------
 //Page is not found
 Route::get('/404', function () {
     return view('layouts.404');

@@ -28,7 +28,7 @@
                     </a>
 
 
-                    <a href="{{env('APP_URL')}}/wishlist" class="relative" 
+                    <a href="{{env('APP_URL')}}/wishlist" class="relative"
                        data-bs-target="#favorite-modal">
                         <i class="fas fa-heart" title="{{__('messages.favorite')}}"></i>
                         <span class="badge bg-danger rounded-pill count-items"><b id="favorite-count"></b></span>
@@ -42,7 +42,7 @@
                         </a>
                         @if(\Illuminate\Support\Facades\Auth::check())
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/profile">{{__('messages.profile')}}</a></li>
+                                <li><a class="dropdown-item" href="/client/dashboard">{{__('messages.profile')}}</a></li>
                                 <li>
                                     <a class="dropdown-item" href="/logout">{{__('messages.logout')}}</a></li>
                             </ul>

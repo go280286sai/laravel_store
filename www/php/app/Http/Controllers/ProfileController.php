@@ -11,6 +11,35 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function index(): View
+    {
+        return view('client.pages.dashboard');
+    }
+
+    public function orders()
+    {
+        return view('client.pages.orders');
+    }
+
+    public function history()
+    {
+        return view('client.pages.history');
+    }
+
+    public function messages()
+    {
+        return view('client.pages.messages');
+    }
+
+    public function profile()
+    {
+        return view('client.pages.profile');
+    }
+
+    public function callback()
+    {
+        return view('client.pages.callback');
+    }
     /**
      * Display the user's profile form.
      */

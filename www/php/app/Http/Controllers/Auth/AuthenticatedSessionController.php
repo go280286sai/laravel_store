@@ -28,8 +28,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if ($request->server('HTTP_REFERER') == env('APP_URL') . '/cart/store'){
+            return redirect()->intended(RouteServiceProvider::CART);
+        }
+            return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

@@ -3061,3 +3061,39 @@
 2023-08-03 10:47:59,321 INFO success: apached entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
 2023-08-03 10:47:59,328 INFO success: crond entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
 2023-08-03 10:48:00,637 INFO success: syslogd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-08-04 08:06:09,521 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-08-04 08:06:09,523 INFO Included extra file "/opt/docker/etc/supervisor.d/apache.conf" during parsing
+2023-08-04 08:06:09,524 INFO Included extra file "/opt/docker/etc/supervisor.d/cron.conf" during parsing
+2023-08-04 08:06:09,525 INFO Included extra file "/opt/docker/etc/supervisor.d/dnsmasq.conf" during parsing
+2023-08-04 08:06:09,527 INFO Included extra file "/opt/docker/etc/supervisor.d/php-fpm.conf" during parsing
+2023-08-04 08:06:09,528 INFO Included extra file "/opt/docker/etc/supervisor.d/postfix.conf" during parsing
+2023-08-04 08:06:09,530 INFO Included extra file "/opt/docker/etc/supervisor.d/ssh.conf" during parsing
+2023-08-04 08:06:09,536 INFO Included extra file "/opt/docker/etc/supervisor.d/syslog.conf" during parsing
+2023-08-04 08:06:09,582 INFO RPC interface 'supervisor' initialized
+2023-08-04 08:06:09,599 INFO supervisord started with pid 47
+2023-08-04 08:06:10,606 INFO spawned: 'syslogd' with pid 50
+2023-08-04 08:06:10,612 INFO spawned: 'php-fpmd' with pid 51
+2023-08-04 08:06:10,630 INFO spawned: 'apached' with pid 52
+2023-08-04 08:06:10,657 INFO spawned: 'crond' with pid 53
+2023-08-04 08:06:10,704 INFO success: php-fpmd entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 08:06:10,709 INFO success: apached entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 08:06:10,715 INFO success: crond entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 08:06:11,961 INFO success: syslogd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-08-04 11:23:12,455 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-08-04 11:23:12,457 INFO Included extra file "/opt/docker/etc/supervisor.d/apache.conf" during parsing
+2023-08-04 11:23:12,467 INFO Included extra file "/opt/docker/etc/supervisor.d/cron.conf" during parsing
+2023-08-04 11:23:12,475 INFO Included extra file "/opt/docker/etc/supervisor.d/dnsmasq.conf" during parsing
+2023-08-04 11:23:12,478 INFO Included extra file "/opt/docker/etc/supervisor.d/php-fpm.conf" during parsing
+2023-08-04 11:23:12,481 INFO Included extra file "/opt/docker/etc/supervisor.d/postfix.conf" during parsing
+2023-08-04 11:23:12,485 INFO Included extra file "/opt/docker/etc/supervisor.d/ssh.conf" during parsing
+2023-08-04 11:23:12,487 INFO Included extra file "/opt/docker/etc/supervisor.d/syslog.conf" during parsing
+2023-08-04 11:23:12,526 INFO RPC interface 'supervisor' initialized
+2023-08-04 11:23:12,533 INFO supervisord started with pid 48
+2023-08-04 11:23:13,539 INFO spawned: 'syslogd' with pid 51
+2023-08-04 11:23:13,549 INFO spawned: 'php-fpmd' with pid 52
+2023-08-04 11:23:13,570 INFO spawned: 'apached' with pid 53
+2023-08-04 11:23:13,587 INFO spawned: 'crond' with pid 54
+2023-08-04 11:23:13,628 INFO success: php-fpmd entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 11:23:13,629 INFO success: apached entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 11:23:13,643 INFO success: crond entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2023-08-04 11:23:15,236 INFO success: syslogd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

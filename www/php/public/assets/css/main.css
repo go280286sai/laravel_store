@@ -240,6 +240,36 @@ li a.dropdown-item:focus, li a.dropdown-item:hover {
     box-shadow: darkred 0px 0px 10px;
 }
 
+
+/*Profile*/
+.left_profile{
+    width: 230px;
+    background-color: #f1f3f6;
+    border-radius: 10px;
+    padding: 20px 10px 20px 10px;
+    box-shadow: #a91111 1px 3px 2px;
+}
+
+.ul_profile{
+    list-style-type: none;
+
+}
+.btn_profile{
+    color: #790707;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+.btn_profile:hover{
+    background-color: #cdd0d7;
+}
+.right_profile{
+
+}
+
+.row_profile{
+    padding-bottom: 20px;
+}
+
 /* Header bottom */
 .header-bottom .navbar-nav li a.nav-link {
     color: #000;
