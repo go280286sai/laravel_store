@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Gender;
+use App\Models\Language;
+use App\Models\User;
+use App\Models\User_description;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,13 +37,30 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        return view('client.pages.profile');
+        $user = User::find(Auth::user()->getAuthIdentifier());
+        $description = $user->user_descriptions;
+        if (! is_null($description)) {
+            $description = $description->toArray()[0];
+        } else {
+            $description = [];
+        }
+        $genders = Gender::all();
+        $lang = Language::getStatus();
+
+        return view('client.pages.profile',
+            [
+                'user' => $user,
+                'description' => $description,
+                'genders' => $genders,
+                'lang' => $lang,
+            ]);
     }
 
     public function callback()
     {
         return view('client.pages.callback');
     }
+
     /**
      * Display the user's profile form.
      */
@@ -55,7 +76,10 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $id = $request->user()->id;
+        $data = $request->validated();
+        User::set_update($id, $data);
+        User_description::set_update($id, $data);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -63,7 +87,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::back();
     }
 
     /**

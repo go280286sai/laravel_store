@@ -12,42 +12,27 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function product_gallery(): HasMany
     {
         return $this->hasMany(Product_gallery::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function product_descriptions(): HasMany
     {
         return $this->hasMany(Product_description::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function order_products(): HasMany
     {
         return $this->hasMany(Order_product::class);
     }
 
     /**
-     * @param $id
-     * @param $qty
-     * @return string
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function add_to_cart($id, $qty): string
@@ -81,8 +66,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function removeCart(int $id): void
@@ -96,9 +79,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @param int $qty
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function updateCart(int $id, int $qty): void
@@ -117,7 +97,6 @@ class Product extends Model
     }
 
     /**
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function translate(): void
@@ -140,8 +119,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_category(int $id): array
@@ -159,8 +136,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_path_product(int $id): array
@@ -179,7 +154,6 @@ class Product extends Model
     }
 
     /**
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function clear(): void

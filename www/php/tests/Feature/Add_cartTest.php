@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -23,6 +21,7 @@ class Add_cartTest extends TestCase
 
     /**
      * A basic feature test example.
+     *
      * @dataProvider additionProvider
      */
     public function test_addtocart($id, $qty): void
@@ -34,7 +33,7 @@ class Add_cartTest extends TestCase
         //Compare the number of goods and the number in the cart
         $amount < $qty ? $qty = $amount : $qty;
         $this->assertFalse($amount < $qty);
-        echo 'qty: ' . $qty . ' <= amount: ' . $amount;
+        echo 'qty: '.$qty.' <= amount: '.$amount;
         //Check if there is a cart and that there is a product in it
         if (Session::has('cart') && Session::get('cart') != []) {
             echo 'has cart';
@@ -43,11 +42,11 @@ class Add_cartTest extends TestCase
             //Check if the product is in the cart
             foreach ($products as $product) {
                 if ($product->id == $is_product->id) {
-                    echo 'is product id: ' . $is_product->id . ' == product id: ' . $product->id;
+                    echo 'is product id: '.$is_product->id.' == product id: '.$product->id;
                     $this->assertEquals($product->id, $is_product->id);
                     //Determine the number of items that can be added to the cart
                     (($product->qty + $qty) <= $amount) ? $product->qty += $qty : $product->qty = $amount;
-                    echo 'qty: ' . $qty . ' <= amount: ' . $amount;
+                    echo 'qty: '.$qty.' <= amount: '.$amount;
                     $this->assertTrue($product->qty <= $amount);
                     //Save the cart
                     Session::put('cart', $products);

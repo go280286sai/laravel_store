@@ -86,9 +86,6 @@ class CartController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * @return View
-     */
     public function store(): View
     {
         return view('products.cart');

@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Delivery_description extends Model
+class Gender_description extends Model
 {
     use HasFactory;
 
-    public function delivery(): BelongsTo
+    public function gender(): BelongsTo
     {
-        return $this->belongsTo(Delivery::class);
+        return $this->belongsTo(Gender::class);
     }
 
-    public function language(): BelongsTo
+    public function languages(): BelongsTo
     {
         return $this->belongsTo(Language::class);
     }
