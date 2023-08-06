@@ -20,11 +20,11 @@ class LangMiddleware
         if (Cache::has('lang')) {
             app()->setLocale(Cache::get('lang'));
         } else {
-            if (Cookie::has('lang')){
+            if (Cookie::has('lang')) {
                 $lang = Cookie::get('lang');
             } else {
                 $lang = app()->getLocale();
-                Cookie::queue('lang', $lang, 3600*24*7);
+                Cookie::queue('lang', $lang, 3600 * 24 * 7);
             }
             Cache::put('lang', $lang);
         }

@@ -6,7 +6,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +53,7 @@ Route::controller(WishlistController::class)->group(function () {
 Route::controller(ProfileController::class)->middleware('auth')->group(function () {
     Route::get('/client/dashboard', [ProfileController::class, 'index'])->name('profile.dashboard');
     Route::get('/client/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/client/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/client/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/client/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/client/callback', [ProfileController::class, 'callback'])->name('profile.callback');
     Route::get('/client/history', [ProfileController::class, 'history'])->name('profile.history');

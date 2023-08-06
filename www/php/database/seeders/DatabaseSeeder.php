@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AddProductsSeeder::class);
         $this->call(AddProductDescriptionSeeder::class);
         $this->call(AddImgSeeder::class);
+        $this->call(InsertIdGenderSeeder::class);
+        $this->call(InsertNamesGenderSeeder::class);
     }
 }

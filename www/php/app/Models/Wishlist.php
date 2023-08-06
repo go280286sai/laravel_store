@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
 class Wishlist extends Model
@@ -12,16 +11,15 @@ class Wishlist extends Model
     use HasFactory;
 
     /**
-     * @param int $id
-     * @return bool
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function add(int $id): bool
     {
-        $wishlists_array = array();
+        $wishlists_array = [];
         $wishlists_array[] = Product::find($id);
-        if (!Session::has('wishlist')) {
+        if (! Session::has('wishlist')) {
             Session::put('wishlist', $wishlists_array);
+
             return true;
         }
         $wishlists = Session::get('wishlist');
@@ -32,17 +30,16 @@ class Wishlist extends Model
         }
         $wishlists[] = $wishlists_array[0];
         Session::put('wishlist', $wishlists);
+
         return true;
     }
 
     /**
-     * @param int $id
-     * @return bool
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function remove(int $id): bool
     {
-        if (!Session::has('wishlist')) {
+        if (! Session::has('wishlist')) {
             return false;
         }
         $wishlists = Session::get('wishlist');
@@ -51,6 +48,7 @@ class Wishlist extends Model
         });
         $updatedArray = array_values($filteredArray);
         Session::put('wishlist', $updatedArray);
+
         return true;
     }
 }

@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Product;
 use App\Models\Wishlist;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -16,23 +14,25 @@ class WishlistTest extends TestCase
         //Checking the additions to the cart
         return [
 
-            [1], [2], [3], [4], [4], [3], [2], [1]
+            [1], [2], [3], [4], [4], [3], [2], [1],
 
         ];
     }
 
     /**
      * A basic feature test example.
+     *
      * @dataProvider additionProvider
      */
     public function test_wishlist_add($id): void
     {
-        $wishlists_array = array();
+        $wishlists_array = [];
         $wishlists_array[] = Product::find($id);
-        $this->assertEmpty(!$wishlists_array);
-        if (!Session::has('wishlist')) {
+        $this->assertEmpty(! $wishlists_array);
+        if (! Session::has('wishlist')) {
             Session::put('wishlist', $wishlists_array);
             $this->assertTrue(Session::has('wishlist'));
+
             return;
         }
         $wishlists = Session::get('wishlist');
@@ -61,19 +61,19 @@ class WishlistTest extends TestCase
     {
         $id = 1;
         $this->assertFalse(Session::has('wishlist'));
-        if (!Session::has('wishlist')) {
+        if (! Session::has('wishlist')) {
             return;
         }
         Wishlist::add(1);
         $wishlists = Session::get('wishlist');
-        $this->assertEmpty(!$wishlists);
+        $this->assertEmpty(! $wishlists);
         $filteredArray = array_filter($wishlists, function ($item) use ($id) {
             return $item['id'] !== $id;
         });
         $updatedArray = array_values($filteredArray);
         Session::put('wishlist', $updatedArray);
         $this->assertEmpty(Session::get('wishlist'));
-        return;
+
     }
 
     public function test_wishlist_remove_result(): void
