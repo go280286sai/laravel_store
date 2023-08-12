@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUpdateRequest;
+use App\Http\Requests\DeliveryRequest;
+use App\Http\Requests\OrderRequest;
+use App\Models\Delivery;
+use App\Models\Language;
+use App\Models\Order;
+use App\Models\Order_product;
 use App\Models\Product;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -38,7 +48,7 @@ class CartController extends Controller
         $id = $request->input('id');
         $qty = $request->input('qty');
         $product = Product::add_to_cart($id, $qty);
-        if (! $product) {
+        if (!$product) {
             throw new Exception('Product not found');
         }
 
@@ -86,13 +96,107 @@ class CartController extends Controller
         return redirect()->route('home');
     }
 
-    public function store(): View
+    public function store(): View|RedirectResponse
     {
-        return view('products.cart');
+        if (Session::has('cart') && count(Session::get('cart')) > 0) {
+            $carts = Session::get('cart');
+            $lang = Language::getStatus();
+            return view('cart.index', ['carts' => $carts, 'lang' => $lang]);
+        }
+        return Redirect::route('home');
     }
 
-    public function create()
+    public function create(Request $request): RedirectResponse
     {
-        //pass
+        if (Session::has('cart') && count(Session::get('cart')) > 0
+            && Auth::check() && Session::has('delivery') && count(Session::get('delivery')) > 0
+        && Session::has('order') && count(Session::get('order')) > 0) {
+            $carts = Session::get('cart');
+            $delivery = Session::get('delivery');
+            $order = Session::get('order');
+            $payment = $request->input('payment');
+
+            try {
+                $order_id = Order::add([
+                        'user_id' => Auth::user()->id,
+                        'notes' => json_encode($delivery),
+                        'total'=>$order['total_sum'],
+                        'qty'=>$order['total_count']]
+                );
+                foreach ($carts as $item) {
+                    Order_product::add([
+                        'order_id' => $order_id,
+                        'product_id' => $item['id'],
+                        'payment_id' => $payment,
+                        'delivery_id' => $delivery['service'],
+                        'title' => $item['title'],
+                        'slug' => $item['slug'],
+                        'qty' => $item['qty'],
+                        'price' => $item['price'],
+                        'sum' => $item['qty'] * $item['price'],
+                    ]);
+                }
+                DB::commit();
+                Session::remove('cart');
+                Session::remove('delivery');
+                Session::remove('order');
+            } catch (Exception $e) {
+                DB::rollback();
+            }
+        }
+        return Redirect::route('home');
+    }
+
+    public function delivery(Request $request)
+    {
+        $delivery = $request->input('id');
+        if (Session::has('cart') && count(Session::get('cart')) > 0) {
+            $carts = Session::get('cart');
+            $lang = Language::getStatus();
+            $user = Auth::user();
+            return view('cart.delivery', ['carts' => $carts, 'lang' => $lang, 'delivery' => $delivery, 'user' => $user]);
+        }
+        return Redirect::route('home');
+    }
+
+    public function agreement(DeliveryRequest $request)
+    {
+        $delivery = $request->validated();
+        $lang = Language::getStatus();
+        if (Session::has('cart') && count(Session::get('cart')) > 0) {
+
+            $carts = Session::get('cart');
+            $service = Delivery::find($delivery['service']);
+            Session::put('delivery', $delivery);
+            return view('cart.agreement', [
+                'delivery' => $delivery,
+                'lang' => $lang,
+                'carts' => $carts,
+                'service' => $service,
+            ]);
+        }
+        return Redirect::route('home');
+    }
+
+    public function order(Request $request)
+    {
+if($request->isMethod('POST')){
+    $request->validate([
+        'total_count' => 'required|numeric',
+        'total_sum' => 'required|numeric',
+    ]);
+    $order = $request->only(['total_count', 'total_sum']);
+    $id=2;
+    Session::put('order', $order);
+
+}else{
+    $request->validate([
+        'id' => 'required|digits_between:1,10',
+    ]);
+    $id = $request->input('id');
+    $order = Session::get('order');
+}
+
+        return view('cart.order', ['id' => $id, 'order' => $order]);
     }
 }

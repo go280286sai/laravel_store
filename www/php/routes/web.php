@@ -25,8 +25,11 @@ Route::controller(CartController::class)->group(function () {
     Route::get('/cart/update', 'update')->name('cart.update');
     Route::get('/cart/add', 'add')->name('cart.add');
     Route::get('/cart/clear', 'clear')->name('cart.clear');
-    Route::get('/cart/store', 'store')->name('product.store');
-    Route::post('/cart/create', 'create')->name('product.create');
+    Route::get('/cart/store', 'store')->name('cart.store');
+    Route::post('/cart/create', 'create')->name('cart.create');
+    Route::get('/cart/delivery', 'delivery')->name('cart.delivery');
+    Route::post('/cart/agreement', 'agreement')->name('cart.agreement');
+    Route::match(['get', 'post'],'/cart/order', 'order')->name('cart.order');
 });
 //----------------------------------------------------------------------------
 //Main controller

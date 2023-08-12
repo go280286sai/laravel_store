@@ -44,6 +44,7 @@ class RegisteredUserController extends Controller
         ]);
         User_description::create([
             'user_id' => $user->id,
+            'gender_id'=>4
         ]);
         event(new Registered($user));
         Auth::login($user);

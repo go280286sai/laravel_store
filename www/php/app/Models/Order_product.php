@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Order_product extends Model
 {
     use HasFactory;
-
+protected $fillable = [
+    'order_id', 'product_id', 'payment_id', 'delivery_id', 'title', 'slug',  'qty', 'price', 'sum'
+];
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -28,5 +30,12 @@ class Order_product extends Model
     public function delivery(): BelongsTo
     {
         return $this->belongsTo(Delivery::class);
+    }
+
+    public static function add(array $data)
+    {
+        $obj = new self();
+        $obj->fill($data);
+        $obj->save();
     }
 }
