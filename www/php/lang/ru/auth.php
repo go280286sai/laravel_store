@@ -3,18 +3,18 @@
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
+    |------------------------------------------------- -------------------------
+    | Линии языка аутентификации
+    |------------------------------------------------- -------------------------
     |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
+    | Следующие языковые строки используются во время аутентификации для различных
+    | сообщения, которые нам нужно отобразить пользователю. Вы можете свободно изменять
+    | эти языковые строки в соответствии с требованиями вашего приложения.
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Эти учетные данные не соответствуют нашим записям.',
+    'password' => 'Указан неверный пароль.',
+    'throttle' => 'Слишком много попыток входа. Повторите попытку через :seconds секунд.',
 
 ];

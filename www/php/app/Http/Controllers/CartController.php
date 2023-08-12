@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUpdateRequest;
 use App\Http\Requests\DeliveryRequest;
-use App\Http\Requests\OrderRequest;
 use App\Models\Delivery;
 use App\Models\Language;
 use App\Models\Order;
 use App\Models\Order_product;
 use App\Models\Product;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -45,8 +44,9 @@ class CartController extends Controller
      */
     public function add(AddUpdateRequest $request): JsonResponse
     {
-        $id = $request->input('id');
-        $qty = $request->input('qty');
+        $fields = $request->validated();
+        $id = $fields['id'];
+        $qty = $fields['qty'];
         $product = Product::add_to_cart($id, $qty);
         if (!$product) {
             throw new Exception('Product not found');
@@ -57,11 +57,13 @@ class CartController extends Controller
 
     /**
      * Remove from cart
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function remove(Request $request): JsonResponse
     {
+        $request->validate(
+            ['id' => 'required|numeric']
+        );
         $id = $request->input('id');
         Product::removeCart($id);
 
@@ -70,13 +72,13 @@ class CartController extends Controller
 
     /**
      * Update cart
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function update(AddUpdateRequest $request): JsonResponse
     {
-        $id = $request->input('id');
-        $qty = $request->input('qty');
+        $fields = $request->validated();
+        $id = $fields['id'];
+        $qty = $fields['qty'];
         Product::updateCart($id, $qty);
 
         return Response::json(['status' => true]);
@@ -86,7 +88,6 @@ class CartController extends Controller
     /**
      * Remove all items from cart
      * Remove session cart
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function clear(): RedirectResponse
@@ -96,21 +97,33 @@ class CartController extends Controller
         return redirect()->route('home');
     }
 
+    /**
+     * @return View|RedirectResponse
+     */
     public function store(): View|RedirectResponse
     {
         if (Session::has('cart') && count(Session::get('cart')) > 0) {
             $carts = Session::get('cart');
             $lang = Language::getStatus();
+
             return view('cart.index', ['carts' => $carts, 'lang' => $lang]);
         }
+
         return Redirect::route('home');
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
     public function create(Request $request): RedirectResponse
     {
+        $request->validate(
+            ['payment' => 'required|digits_between:1,5']);
         if (Session::has('cart') && count(Session::get('cart')) > 0
             && Auth::check() && Session::has('delivery') && count(Session::get('delivery')) > 0
-        && Session::has('order') && count(Session::get('order')) > 0) {
+            && Session::has('order') && count(Session::get('order')) > 0) {
             $carts = Session::get('cart');
             $delivery = Session::get('delivery');
             $order = Session::get('order');
@@ -120,8 +133,8 @@ class CartController extends Controller
                 $order_id = Order::add([
                         'user_id' => Auth::user()->id,
                         'notes' => json_encode($delivery),
-                        'total'=>$order['total_sum'],
-                        'qty'=>$order['total_count']]
+                        'total' => $order['total_sum'],
+                        'qty' => $order['total_count']]
                 );
                 foreach ($carts as $item) {
                     Order_product::add([
@@ -144,22 +157,44 @@ class CartController extends Controller
                 DB::rollback();
             }
         }
+
         return Redirect::route('home');
     }
 
-    public function delivery(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse|View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function delivery(Request $request): RedirectResponse|View
     {
+        $request->validate(
+            ['id' => 'nullable|digits_between:1,5']
+        );
         $delivery = $request->input('id');
         if (Session::has('cart') && count(Session::get('cart')) > 0) {
             $carts = Session::get('cart');
             $lang = Language::getStatus();
             $user = Auth::user();
-            return view('cart.delivery', ['carts' => $carts, 'lang' => $lang, 'delivery' => $delivery, 'user' => $user]);
+
+            return view('cart.delivery',
+                [
+                    'carts' => $carts,
+                    'lang' => $lang,
+                    'delivery' => $delivery,
+                    'user' => $user
+                ]);
         }
+
         return Redirect::route('home');
     }
 
-    public function agreement(DeliveryRequest $request)
+    /**
+     * @param DeliveryRequest $request
+     * @return RedirectResponse|View
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function agreement(DeliveryRequest $request): RedirectResponse|View
     {
         $delivery = $request->validated();
         $lang = Language::getStatus();
@@ -168,6 +203,7 @@ class CartController extends Controller
             $carts = Session::get('cart');
             $service = Delivery::find($delivery['service']);
             Session::put('delivery', $delivery);
+
             return view('cart.agreement', [
                 'delivery' => $delivery,
                 'lang' => $lang,
@@ -175,27 +211,34 @@ class CartController extends Controller
                 'service' => $service,
             ]);
         }
+
         return Redirect::route('home');
     }
 
-    public function order(Request $request)
+    /**
+     * @param Request $request
+     * @return View
+     *
+     * @author Aleksander Storchak <go280286sai@gmail.com>
+     */
+    public function order(Request $request): View
     {
-if($request->isMethod('POST')){
-    $request->validate([
-        'total_count' => 'required|numeric',
-        'total_sum' => 'required|numeric',
-    ]);
-    $order = $request->only(['total_count', 'total_sum']);
-    $id=2;
-    Session::put('order', $order);
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'total_count' => 'required|numeric',
+                'total_sum' => 'required|numeric',
+            ]);
+            $order = $request->only(['total_count', 'total_sum']);
+            $id = 2;
+            Session::put('order', $order);
 
-}else{
-    $request->validate([
-        'id' => 'required|digits_between:1,10',
-    ]);
-    $id = $request->input('id');
-    $order = Session::get('order');
-}
+        } else {
+            $request->validate([
+                'id' => 'required|digits_between:1,10',
+            ]);
+            $id = $request->input('id');
+            $order = Session::get('order');
+        }
 
         return view('cart.order', ['id' => $id, 'order' => $order]);
     }

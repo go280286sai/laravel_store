@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Payment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddIdPaymentsSeeder extends Seeder
@@ -13,9 +12,9 @@ class AddIdPaymentsSeeder extends Seeder
      */
     public function run(): void
     {
-       for($i=1;$i<=2;$i++){
-           $obj = new Payment();
-           $obj->save();
-       }
+        for ($i = 1; $i <= 2; $i++) {
+            $obj = new Payment();
+            $obj->save();
+        }
     }
 }

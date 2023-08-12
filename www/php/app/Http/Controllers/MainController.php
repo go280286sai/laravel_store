@@ -12,7 +12,6 @@ class MainController extends Controller
 {
     /**
      * Get main page
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function index(): View
@@ -31,7 +30,6 @@ class MainController extends Controller
 
     /**
      * Get a set of records by hits
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function get_hits(int $limit): object

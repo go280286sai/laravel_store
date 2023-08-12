@@ -15,31 +15,46 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         return view('client.pages.dashboard');
     }
 
-    public function orders()
+    /**
+     * @return View
+     */
+    public function orders(): View
     {
         return view('client.pages.orders');
     }
 
-    public function history()
+    /**
+     * @return View
+     */
+    public function history(): View
     {
         return view('client.pages.history');
     }
 
-    public function messages()
+    /**
+     * @return View
+     */
+    public function messages(): View
     {
         return view('client.pages.messages');
     }
 
-    public function profile()
+    /**
+     * @return View
+     */
+    public function profile(): View
     {
         $user = User::find(Auth::user()->getAuthIdentifier());
         $description = $user->user_descriptions;
-        if (! is_null($description)) {
+        if (!is_null($description)) {
             $description = $description->toArray()[0];
         } else {
             $description = [];
@@ -56,7 +71,10 @@ class ProfileController extends Controller
             ]);
     }
 
-    public function callback()
+    /**
+     * @return View
+     */
+    public function callback(): View
     {
         return view('client.pages.callback');
     }
@@ -73,6 +91,8 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile information.
+     * @param ProfileUpdateRequest $request
+     * @return RedirectResponse
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {

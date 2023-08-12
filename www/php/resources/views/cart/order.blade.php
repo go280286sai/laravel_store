@@ -11,7 +11,4 @@
     @default
         @include('cart.orders.card')
     @endswitch
-
-
-
 @endsection

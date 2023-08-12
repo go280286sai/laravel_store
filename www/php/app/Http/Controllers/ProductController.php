@@ -12,7 +12,6 @@ class ProductController extends Controller
 {
     /**
      * Get selected product
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function view(string $slug): View
@@ -32,7 +31,6 @@ class ProductController extends Controller
 
     /**
      * Get selected category
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function category(int $id): View
@@ -48,7 +46,6 @@ class ProductController extends Controller
 
     /**
      * Get main category
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function parent(int $id): View

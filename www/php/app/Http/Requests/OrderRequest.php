@@ -22,9 +22,9 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'total_sum'=>['required', 'numeric'],
-            'total_count'=> ['required', 'numeric'],
-            'id'=>['digits_between:1,10'],
+            'total_sum' => ['required', 'numeric'],
+            'total_count' => ['required', 'numeric'],
+            'id' => ['digits_between:1,10'],
         ];
     }
 }

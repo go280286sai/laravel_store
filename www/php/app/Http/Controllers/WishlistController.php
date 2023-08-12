@@ -12,7 +12,10 @@ use Illuminate\View\View;
 
 class WishlistController extends Controller
 {
-    public function index(Request $request): View
+    /**
+     * @return View
+     */
+    public function index(): View
     {
         if (Session::has('wishlist')) {
             $wishlists = Session::get('wishlist');
@@ -23,6 +26,9 @@ class WishlistController extends Controller
         return view('products.wishlist', ['products' => $wishlists, 'lang' => Language::getStatus()->id]);
     }
 
+    /**
+     * @return int
+     */
     public function get(): int
     {
         if (Session::has('wishlist')) {
@@ -34,17 +40,28 @@ class WishlistController extends Controller
         return 0;
     }
 
+    /**
+     * @param Request $request
+     * @return bool
+     */
     public function add(Request $request): bool
     {
+        $request->validate([
+            'id' => ['required', 'numeric'],
+        ]);
         $id = $request->input('id');
         Wishlist::add($id);
 
         return true;
     }
 
+    /**
+     * @param IdGetRequest $request
+     * @return RedirectResponse
+     */
     public function remove(IdGetRequest $request): RedirectResponse
     {
-        $id = $request->input('id');
+        $id = $request->validated('id');
         Wishlist::remove($id);
 
         return redirect()->back();

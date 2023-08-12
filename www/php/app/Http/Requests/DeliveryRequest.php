@@ -23,11 +23,11 @@ class DeliveryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100'],
-            'last_name'=>['required', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
             'phone' => ['required', 'digits_between:10,15'],
             'city' => ['required', 'string', 'max:100'],
             'street' => ['required', 'string', 'max:100'],
-            'service'=>['required', 'numeric', 'digits_between:1,5']
+            'service' => ['required', 'numeric', 'digits_between:1,5'],
         ];
     }
 }

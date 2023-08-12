@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Delivery;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddIdDeliveriesSeeder extends Seeder
@@ -13,9 +12,9 @@ class AddIdDeliveriesSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i=1; $i<=2; $i++){
-           $obj = new Delivery();
-           $obj->save();
+        for ($i = 1; $i <= 2; $i++) {
+            $obj = new Delivery();
+            $obj->save();
         }
     }
 }

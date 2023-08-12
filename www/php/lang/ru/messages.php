@@ -55,5 +55,35 @@ return [
     'forgot_password' => 'Forgot your password? No problem. Just let us know your email address and we will email you a
                         password reset link that will allow you to choose a new one.',
     'no_products' => 'Нет товаров',
+    'newpost' => 'Новая почта',
+    'ukrpost' => 'Укрпочта',
+    'name' => 'Имя',
+    'last_name' => 'Фамилия',
+    'phone' => 'Телефон',
+    'city' => 'Город',
+    'send' => 'Отправить',
+    'edit_to_back' => 'Для изменения нажмите на "Вернуться"',
+    'to_back' => 'Вернуться',
+    'payment_to_card' => 'Оплата картой',
+    'input_to_card' => 'Введите номер карты',
+    'input_cvv' => 'Введите CVV',
+    'input_date_to_card' => 'Введите срок действия карты',
+    'to_payment' => 'Оплатить',
+    'name_last_name_recipient' => 'Фамилия и имя получателя:',
+    'delivery_service' => 'Служба доставки:',
+    'delivery_address' => 'Адрес доставки:',
+    'go_to_the_payment' => 'Перейти к оплате',
+    'orders' => 'Заказы',
+    'history_of_orders' => 'История заказов',
+    'messages'=>'Сообщения',
+    'callback'=>'Обратная связь',
+    'edit_profile'=>'Изменение профиля',
+    'gender'=>'Пол',
+    'birthday'=>'Дата рождения',
+    'current_password'=>'Текущий пароль',
+    'new_password'=>'Новый пароль',
+    'custom_products'=>'Заказ товаров:'
+
+
 
 ];

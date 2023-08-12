@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Delivery_description;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AddNamesDeliveriesSeeder extends Seeder
@@ -14,15 +13,15 @@ class AddNamesDeliveriesSeeder extends Seeder
     public function run(): void
     {
         $deliverys = [
-                'Нова пошта', 'Укрпошта'
+            'Нова пошта', 'Укрпошта',
         ];
-        for($i=1; $i<=2; $i++){
-            for ($j=1; $j<=3; $j++){
+        for ($i = 1; $i <= 2; $i++) {
+            for ($j = 1; $j <= 3; $j++) {
                 $obj = new Delivery_description();
                 $obj->delivery_id = $i;
                 $obj->language_id = $j;
-                $obj->title = $deliverys[$i-1];
-                $obj->description = $deliverys[$i-1];
+                $obj->title = $deliverys[$i - 1];
+                $obj->description = $deliverys[$i - 1];
                 $obj->save();
             }
         }

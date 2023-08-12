@@ -9,14 +9,14 @@
         <div class="container">
             <div class="row">
                 <div class="create_cart">
-                    <h3>Заказ товаров:</h3>
+                    <h3>{{__('messages.custom_products')}}</h3>
                     <table class="table table-hover" style="width:100%">
                         <thead>
                         <tr class="table-dark">
-                            <th>Название</th>
-                            <th>Цена</th>
-                            <th>Количество</th>
-                            <th>Сумма</th>
+                            <th>{{__('messages.title')}}</th>
+                            <th>{{__('messages.price')}}</th>
+                            <th>{{__('messages.quantity')}}</th>
+                            <th>{{__('messages.sum')}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,19 +34,16 @@
                     </table>
                     <table class="table">
                         <tr class="table-dark">
-                            <td>Итого количество: </td>
+                            <td>{{__('messages.all_products')}}</td>
                             <td>{{$total_count}}</td>
                         </tr>
                         <tr class="table-dark">
                             <td>Итого сумма: </td>
-                            <td>{{$total_sum}}</td>
+                            <td>{{__('messages.total')}}</td>
                     </table>
                 </div>
             </div>
         </div>
-        <h3>Выбор доставки:</h3>
-
-        <h3>Выбор оплаты:</h3>
     @endif
 @endsection
 @section('js')

@@ -1,20 +1,19 @@
 <?php
 
 return [
-
     /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+     |------------------------------------------------ ------------------------
+     | Мовні рядки автентифікації
+     |------------------------------------------------ ------------------------
+     |
+     | Наступні мовні рядки використовуються під час автентифікації для різних
+     | повідомлення, які ми повинні показати користувачеві. Ви можете змінювати
+     | ці мовні рядки відповідно до вимог вашої програми.
+     |
+     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Ці облікові дані не відповідають нашим записам.',
+    'password' => 'Наданий пароль неправильний.',
+    'throttle' => 'Забагато спроб входу. Повторіть спробу через :seconds секунд.',
 
 ];

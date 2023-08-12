@@ -29,7 +29,7 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/cart/create', 'create')->name('cart.create');
     Route::get('/cart/delivery', 'delivery')->name('cart.delivery');
     Route::post('/cart/agreement', 'agreement')->name('cart.agreement');
-    Route::match(['get', 'post'],'/cart/order', 'order')->name('cart.order');
+    Route::match(['get', 'post'], '/cart/order', 'order')->name('cart.order');
 });
 //----------------------------------------------------------------------------
 //Main controller
