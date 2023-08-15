@@ -63,18 +63,20 @@
                     <input class="form-control form_text" id="name" type="text" disabled="disabled"
                            value="{{$delivery['city']}} {{$delivery['street']}}">
                 </div>
+                {{__('messages.edit_to_back')}}
+
                 <form action="/cart/order" method="post">
                     @csrf
                     <input type="hidden" name="total_sum" value="<?=$total_price?>">
                     <input type="hidden" name="total_count" value="<?=$total_count?>">
                     <input type="submit" class="btn btn-primary" value="{{__('messages.go_to_the_payment')}}">
+                    <div class="mb-3">
+                        <a href="/cart/delivery">
+                            <div class="btn btn-danger ripple">{{__('messages.to_back')}}</div>
+                        </a>
+                    </div>
                 </form>
-               {{__('messages.edit_to_back')}}
-                <div class="mb-3">
-                    <a href="/cart/delivery">
-                        <div class="btn btn-danger ripple">{{__('messages.to_back')}}</div>
-                    </a>
-                </div>
+
             </form>
 
             <br><br>

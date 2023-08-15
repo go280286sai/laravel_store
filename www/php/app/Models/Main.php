@@ -53,4 +53,17 @@ class Main extends Model
 
         return null;
     }
+
+    public static function remove(int $id): void
+    {
+        self::find($id)->delete();
+    }
+
+    public static function add(array $data): void
+    {
+        $obj = new self();
+        $obj->save();
+        $data['main_id'] = $obj->id;
+        Main_description::add($data);
+    }
 }

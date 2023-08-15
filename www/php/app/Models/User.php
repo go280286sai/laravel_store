@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -65,5 +66,15 @@ class User extends Authenticatable
         $obj->save();
 
         return true;
+    }
+
+    public static function is_admin(): bool
+    {
+        $admin = self::find(Auth::user()->id);
+        if($admin->is_admin){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

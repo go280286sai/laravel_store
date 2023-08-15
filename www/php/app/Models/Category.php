@@ -60,4 +60,24 @@ class Category extends Model
 
         return $path;
     }
+
+    public static function remove(int $id)
+    {
+        self::find($id)->delete();
+    }
+    public static function add(array $data): void
+    {
+        $obj = new self();
+        $obj->main_id = $data['main'];
+        $obj->save();
+        $data['category_id'] = $obj->id;
+        Category_description::add($data);
+    }
+
+    public static function set_update(int $id, int $value)
+    {
+        $obj = self::find($id);
+        $obj->main_id = $value;
+        $obj->save();
+    }
 }

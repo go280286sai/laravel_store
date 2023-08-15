@@ -15,7 +15,7 @@
                 <div class="mb-3">
                     <label for="last_name" class="form-label text_label">{{__('messages.last_name')}}</label>
                     <input class="form-control form_text" id="last_name" type="text" name="last_name"
-                           placeholder="Фамилия"
+                           placeholder="{{__('messages.last_name')}}"
                            value="{{$user->user_descriptions[0]->last_name??''}}">
                     <x-input-error :messages="$errors->get('last_name')" class="mt-2"/>
                 </div>

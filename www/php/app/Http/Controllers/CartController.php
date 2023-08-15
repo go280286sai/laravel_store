@@ -128,7 +128,6 @@ class CartController extends Controller
             $delivery = Session::get('delivery');
             $order = Session::get('order');
             $payment = $request->input('payment');
-
             try {
                 $order_id = Order::add([
                         'user_id' => Auth::user()->id,

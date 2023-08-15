@@ -29,4 +29,24 @@ class Main_description extends Model
     {
         return self::find($id)->title;
     }
+
+    public static function set_update(array $data, int $id): void
+    {
+        for($i=1;$i<=3;$i++){
+            $obj = self::all()->where('main_id', $id)->where('language_id', $i)->first();
+            $obj->title = $data['main_description_'.$i];
+            $obj->save();
+        }
+    }
+
+    public static function add(array $data): void
+    {
+        for ($i=1;$i<=3;$i++){
+            $obj = new self();
+            $obj->main_id = $data['main_id'];
+            $obj->language_id = $i;
+            $obj->title = $data['main_description_'.$i];
+            $obj->save();
+        }
+    }
 }

@@ -43,6 +43,8 @@
         crossorigin="anonymous"></script>
 <script src="{{env('APP_URL')}}/assets/js/main.js"></script>
 <script src="{{env('APP_URL')}}/assets/js/jquery.magnific-popup.min.js"></script>
+@section('js')
+    @show
 </body>
 </html>
 

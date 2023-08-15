@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Foundation\Application;
@@ -86,14 +89,14 @@ Route::get('/cart_reload', function () {
     return 0;
 });
 //------------------------------------------------------------------
+Route::middleware(\App\Http\Middleware\IsAdminMiddleware::class)->group(function () {
+   Route::resource('admin/categories', CategoryController::class);
+   Route::resource('admin/main_categories', MainCategoryController::class);
+   Route::resource('admin/products', AdminProductController::class);
+});
+//------------------------------------------------------------------
 Route::get('/test', function () {
-    $product = 9;
-    $products = \App\Models\Product::get_category($product);
-    echo $products['title_product'];
-    $main = \App\Models\Category::get_main($products['category_id']);
-    echo $main['title_category'];
-    echo \App\Models\Main::get_title($main['main_id']);
-    dd($main['main_id']);
+echo phpinfo();
 
 });
 require __DIR__.'/auth.php';

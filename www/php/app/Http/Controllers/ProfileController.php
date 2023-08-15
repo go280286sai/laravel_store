@@ -53,9 +53,9 @@ class ProfileController extends Controller
     public function profile(): View
     {
         $user = User::find(Auth::user()->getAuthIdentifier());
-        $description = $user->user_descriptions;
+        $description = $user->user_descriptions->first();
         if (!is_null($description)) {
-            $description = $description->toArray()[0];
+            $description = $description->toArray();
         } else {
             $description = [];
         }
