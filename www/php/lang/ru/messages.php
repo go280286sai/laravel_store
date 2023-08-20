@@ -75,15 +75,13 @@ return [
     'go_to_the_payment' => 'Перейти к оплате',
     'orders' => 'Заказы',
     'history_of_orders' => 'История заказов',
-    'messages'=>'Сообщения',
-    'callback'=>'Обратная связь',
-    'edit_profile'=>'Изменение профиля',
-    'gender'=>'Пол',
-    'birthday'=>'Дата рождения',
-    'current_password'=>'Текущий пароль',
-    'new_password'=>'Новый пароль',
-    'custom_products'=>'Заказ товаров:'
-
-
+    'messages' => 'Сообщения',
+    'callback' => 'Обратная связь',
+    'edit_profile' => 'Изменение профиля',
+    'gender' => 'Пол',
+    'birthday' => 'Дата рождения',
+    'current_password' => 'Текущий пароль',
+    'new_password' => 'Новый пароль',
+    'custom_products' => 'Заказ товаров:',
 
 ];

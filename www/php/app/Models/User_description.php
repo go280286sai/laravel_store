@@ -11,18 +11,32 @@ class User_description extends Model
 {
     use HasFactory, softDeletes;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = ['user_id', 'gender_id', 'last_name', 'birthday', 'phone'];
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
     }
 
+    /**
+     * @param int $id
+     * @param array $data
+     * @return true
+     */
     public static function set_update(int $id, array $data): true
     {
 

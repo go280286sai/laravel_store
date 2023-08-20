@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MainCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Foundation\Application;
@@ -89,14 +89,18 @@ Route::get('/cart_reload', function () {
     return 0;
 });
 //------------------------------------------------------------------
-Route::middleware(\App\Http\Middleware\IsAdminMiddleware::class)->group(function () {
-   Route::resource('admin/categories', CategoryController::class);
-   Route::resource('admin/main_categories', MainCategoryController::class);
-   Route::resource('admin/products', AdminProductController::class);
+Route::prefix('admin')->middleware([\App\Http\Middleware\IsAdminMiddleware::class, \App\Http\Middleware\IsAuthMiddleware::class])->group(function () {
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/main_categories', MainCategoryController::class);
+    Route::resource('/products', AdminProductController::class);
+    Route::get('/products/status/{id}', [AdminProductController::class, 'status'])->name('admin.products.status');
+    Route::post('/gallery', [AdminProductController::class, 'gallery'])->name('admin.gallery');
+    Route::get('/gallery/{id}/delete', [AdminProductController::class, 'delete_gallery'])->name('admin.gallery.delete');
+    Route::post('/add_gallery', [AdminProductController::class, 'add_gallery'])->name('admin.add_gallery');
 });
 //------------------------------------------------------------------
 Route::get('/test', function () {
-echo phpinfo();
+    echo phpinfo();
 
 });
 require __DIR__.'/auth.php';

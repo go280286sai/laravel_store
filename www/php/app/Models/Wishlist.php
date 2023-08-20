@@ -11,13 +11,15 @@ class Wishlist extends Model
     use HasFactory;
 
     /**
+     * @param int $id
+     * @return true
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
-    public static function add(int $id): bool
+    public static function add(int $id): true
     {
         $wishlists_array = [];
         $wishlists_array[] = Product::find($id);
-        if (! Session::has('wishlist')) {
+        if (!Session::has('wishlist')) {
             Session::put('wishlist', $wishlists_array);
 
             return true;
@@ -35,11 +37,13 @@ class Wishlist extends Model
     }
 
     /**
+     * @param int $id
+     * @return bool
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function remove(int $id): bool
     {
-        if (! Session::has('wishlist')) {
+        if (!Session::has('wishlist')) {
             return false;
         }
         $wishlists = Session::get('wishlist');

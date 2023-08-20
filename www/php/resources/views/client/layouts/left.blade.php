@@ -11,6 +11,10 @@
             <li><a href="{{env('APP_URL')}}/admin/categories">
                     <div class="btn btn_profile">Категории</div>
                 </a></li>
+
+            <li><a href="{{env('APP_URL')}}/admin/products">
+                    <div class="btn btn_profile">Товары</div>
+                </a></li>
         @endif
         <li><a href="{{env('APP_URL')}}/client/orders">
                 <div class="btn btn_profile">{{__('messages.orders')}}</div>

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -48,7 +47,7 @@ class CartController extends Controller
         $id = $fields['id'];
         $qty = $fields['qty'];
         $product = Product::add_to_cart($id, $qty);
-        if (!$product) {
+        if (! $product) {
             throw new Exception('Product not found');
         }
 
@@ -57,6 +56,7 @@ class CartController extends Controller
 
     /**
      * Remove from cart
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function remove(Request $request): JsonResponse
@@ -72,6 +72,7 @@ class CartController extends Controller
 
     /**
      * Update cart
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function update(AddUpdateRequest $request): JsonResponse
@@ -88,6 +89,7 @@ class CartController extends Controller
     /**
      * Remove all items from cart
      * Remove session cart
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function clear(): RedirectResponse
@@ -97,9 +99,6 @@ class CartController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * @return View|RedirectResponse
-     */
     public function store(): View|RedirectResponse
     {
         if (Session::has('cart') && count(Session::get('cart')) > 0) {
@@ -113,8 +112,6 @@ class CartController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return RedirectResponse
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function create(Request $request): RedirectResponse
@@ -130,10 +127,10 @@ class CartController extends Controller
             $payment = $request->input('payment');
             try {
                 $order_id = Order::add([
-                        'user_id' => Auth::user()->id,
-                        'notes' => json_encode($delivery),
-                        'total' => $order['total_sum'],
-                        'qty' => $order['total_count']]
+                    'user_id' => Auth::user()->id,
+                    'notes' => json_encode($delivery),
+                    'total' => $order['total_sum'],
+                    'qty' => $order['total_count']]
                 );
                 foreach ($carts as $item) {
                     Order_product::add([
@@ -161,8 +158,6 @@ class CartController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return RedirectResponse|View
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function delivery(Request $request): RedirectResponse|View
@@ -181,7 +176,7 @@ class CartController extends Controller
                     'carts' => $carts,
                     'lang' => $lang,
                     'delivery' => $delivery,
-                    'user' => $user
+                    'user' => $user,
                 ]);
         }
 
@@ -189,8 +184,6 @@ class CartController extends Controller
     }
 
     /**
-     * @param DeliveryRequest $request
-     * @return RedirectResponse|View
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function agreement(DeliveryRequest $request): RedirectResponse|View
@@ -215,9 +208,6 @@ class CartController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return View
-     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public function order(Request $request): View

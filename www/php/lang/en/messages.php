@@ -75,15 +75,13 @@ return [
     'go_to_the_payment' => 'Go to payment',
     'orders' => 'Orders',
     'history_of_orders' => 'History of orders',
-    'messages'=>'Messages',
-    'callback'=>'Feedback',
-    'edit_profile'=>'Edit profile',
-    'gender'=>'Gender',
-    'birthday'=>'Date of birth',
-    'current_password'=>'Current password',
-    'new_password'=>'New password',
-    'custom_products'=>'Order products:'
-
-
+    'messages' => 'Messages',
+    'callback' => 'Feedback',
+    'edit_profile' => 'Edit profile',
+    'gender' => 'Gender',
+    'birthday' => 'Date of birth',
+    'current_password' => 'Current password',
+    'new_password' => 'New password',
+    'custom_products' => 'Order products:',
 
 ];
