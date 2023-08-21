@@ -166,7 +166,9 @@ li a.dropdown-item:focus, li a.dropdown-item:hover {
     outline: 0;
     box-shadow: 0 0 0 .1rem rgba(238, 110, 115, .25);
 }
-
+.btn_create {
+    margin-bottom: 20px;
+}
 /* Header top */
 .header-top {
     background-color: #000;

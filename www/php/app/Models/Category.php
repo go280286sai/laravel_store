@@ -82,7 +82,7 @@ class Category extends Model
      * @param int $id
      * @return void
      */
-    public static function remove(int $id)
+    public static function remove(int $id): void
     {
         self::find($id)->delete();
     }

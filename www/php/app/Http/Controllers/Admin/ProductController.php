@@ -97,7 +97,6 @@ class ProductController extends Controller
             [
                 'galleries' => $galleries,
                 'categories' => $categories,
-                'langs' => Language::all(),
                 'products' => $products,
             ]);
     }

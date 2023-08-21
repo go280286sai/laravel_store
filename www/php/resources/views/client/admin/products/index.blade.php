@@ -2,17 +2,19 @@
 
 @section('content')
     <div class="container">
-        <a href="/admin/products/create"><div class="btn btn-success">Добавить</div></a>
+        <div class="btn_create">
+            <a href="{{env('APP_URL')}}/admin/products/create"><div class="btn btn-primary">Добавить</div></a>
+        </div>
         <table id="example" class="display" style="width:100%">
             <thead>
             <tr>
-                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png" alt="{{$lang->title}}"/>&nbsp;Product</th>
-                <th>Price</th>
-                <th>Amount</th>
+                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png" alt="{{$lang->title}}"/>&nbsp;{{__('messages.product')}}</th>
+                <th>{{__('messages.price')}}</th>
+                <th>{{__('messages.quantity')}}</th>
                 <th>Image</th>
-                <th>HIT</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Hit</th>
+                <th>{{__('messages.status')}}</th>
+                <th>{{__('messages.action')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -33,21 +35,21 @@
                     </td>
                     <td>
                         @if($product->status == 1)
-                            <a href="/admin/products/status/{{$product->id}}"><div class="btn btn-success">Deactivate</div></a>
+                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}"><div class="btn btn-success">{{__('messages.active')}}</div></a>
                         @else
-                            <a href="/admin/products/status/{{$product->id}}"><div class="btn btn-danger">Active</div></a>
+                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}"><div class="btn btn-danger">{{__('messages.deactivate')}}</div></a>
                         @endif
                     </td>
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/products/{{$product->id}}/edit"><div class="btn btn-success">Редактировать</div></a>
+                                <td><a href="{{env('APP_URL')}}/admin/products/{{$product->id}}/edit"><div class="btn btn-success">{{__('messages.edit')}}</div></a>
                                 </td>
                                 <td>
-                                    <form action="/admin/products/{{$product->id}}" method="post">
+                                    <form action="{{env('APP_URL')}}/admin/products/{{$product->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}" />
                                     </form>
                                 </td>
 

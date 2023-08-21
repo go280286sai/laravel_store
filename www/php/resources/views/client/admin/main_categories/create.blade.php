@@ -2,38 +2,45 @@
 
 @section('content')
     <div class="container">
-        <table class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th><img src="{{env('APP_URL')}}/assets/img/en.png" alt="Ukraine"/></th>
-                <th><img src="{{env('APP_URL')}}/assets/img/uk.png" alt="Ukraine"/></th>
-                <th><img src="{{env('APP_URL')}}/assets/img/ru.png" alt="Ukraine"/></th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <form action="/admin/main_categories" method="post">
-                @csrf
-                <tr>
-                        <td>
-                            <input name="main_description_1" type="text">
-                        </td> <td>
-                            <input name="main_description_2" type="text">
-                        </td> <td>
-                            <input name="main_description_3" type="text">
-                        </td>
-                    <td>
-                        <input type="submit" class="btn btn-success" value="Добавить">
-                    </td>
-                </tr>
-            </form>
-            </tbody>
-        </table>
-        <br>
-        <a href="/admin/main_categories"><div class="btn btn-danger">Назад</div></a>
-    </div>
+        @include('layouts.errors')
+        <form action="{{env('APP_URL')}}/admin/main_categories" method="post">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/en.png" alt="English"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_1" class="form-label">Title</label>
+                <input type="text" name="main_description_1" placeholder="Title" class="form-control"
+                       id="main_description_1" aria-describedby="emailHelp" value="{{old('main_description_1')}}">
+                <div id="emailHelp" class="form-text">Name of category</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/uk.png" alt="Ukraine"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_2" class="form-label">Назва</label>
+                <input type="text" name="main_description_2" placeholder="Назва" class="form-control"
+                       id="main_description_2" aria-describedby="emailHelp" value="{{old('main_description_2')}}">
+                <div id="emailHelp" class="form-text">Назва категорії</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/ru.png" alt="Russian"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_3" class="form-label">Название</label>
+                <input type="text" name="main_description_3" placeholder="Название" class="form-control"
+                       id="main_description_3" aria-describedby="emailHelp" value="{{old('main_description_3')}}">
+                <div id="emailHelp" class="form-text">Название категории</div>
+            </div>
+            <button type="submit" class="btn btn-primary">{{__('messages.add')}}</button>
+        </form>
 
-    @section('js')
-    @endsection
+        <br>
+        <a href="{{env('APP_URL')}}/admin/main_categories">
+            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+        </a>
+    </div>
 @endsection
 
+@section('js')
+@endsection

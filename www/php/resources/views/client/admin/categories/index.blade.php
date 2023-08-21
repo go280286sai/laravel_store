@@ -2,13 +2,18 @@
 
 @section('content')
     <div class="container">
-        <a href="/admin/categories/create"><div class="btn btn-success">Добавить</div></a>
+        <div class="btn_create">
+            <a href="/admin/categories/create">
+                <div class="btn btn-primary">{{__('messages.add')}}</div>
+            </a>
+        </div>
         <table id="example" class="display" style="width:100%">
             <thead>
             <tr>
-                <th>Main category</th>
-                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png" alt="{{$lang->title}}"/>&nbsp;Категория</th>
-                <th>Action</th>
+                <th>{{__('messages.main_category')}}</th>
+                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png"
+                         alt="{{$lang->title}}"/>&nbsp;{{__('messages.category')}}</th>
+                <th>{{__('messages.action')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -27,13 +32,15 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/categories/{{$category->id}}/edit"><div class="btn btn-success">Редактировать</div></a>
+                                <td><a href="/admin/categories/{{$category->id}}/edit">
+                                        <div class="btn btn-success">{{__('messages.edit')}}</div>
+                                    </a>
                                 </td>
                                 <td>
                                     <form action="/admin/categories/{{$category->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}"/>
                                     </form>
                                 </td>
                             </tr>

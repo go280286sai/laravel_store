@@ -53,8 +53,10 @@ class MainCategoryController extends Controller
      */
     public function edit(int $id): View
     {
-        $main = Main::find($id);
-
+        $main = Main_description::join('mains', 'main_descriptions.main_id', '=', 'mains.id')
+            ->select(['mains.id', 'main_descriptions.title'])
+            ->where('main_id', $id)
+            ->get();
         return view('/client/admin/main_categories/edit', ['main' => $main]);
     }
 

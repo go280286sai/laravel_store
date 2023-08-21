@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a href="/admin/main_categories/create"><div class="btn btn-success">Добавить</div></a>
+        <div class="btn_create">
+            <a href="/admin/main_categories/create" ><div class="btn btn-primary">{{__('messages.add')}}</div></a>
+        </div>
+
         <table id="example" class="display" style="width:100%">
             <thead>
             <tr>
@@ -10,7 +13,7 @@
                 <th><img src="{{env('APP_URL')}}/assets/img/en.png" alt="Ukraine"/></th>
                 <th><img src="{{env('APP_URL')}}/assets/img/uk.png" alt="Ukraine"/></th>
                 <th><img src="{{env('APP_URL')}}/assets/img/ru.png" alt="Ukraine"/></th>
-                <th>Action</th>
+                <th>{{__('messages.action')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -25,29 +28,27 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/main_categories/{{$main->id}}/edit"><div class="btn btn-success">Редактировать</div></a>
+                                <td><a href="/admin/main_categories/{{$main->id}}/edit"><div class="btn btn-success">{{__('messages.edit')}}</div></a>
                                 </td>
                                 <td>
                                     <form action="/admin/main_categories/{{$main->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}" />
                                     </form>
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-
             @endforeach
             </tbody>
         </table>
     </div>
-    @section('js')
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script>
-            new DataTable('#example');
-        </script>
-    @endsection
 @endsection
-
+@section('js')
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+@endsection

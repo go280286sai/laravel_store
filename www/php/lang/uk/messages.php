@@ -83,5 +83,17 @@ return [
     'current_password' => 'Поточний пароль',
     'new_password' => 'Новий пароль',
     'custom_products' => 'Замовлення товарів:',
-
+    'add'=>'Додати',
+    'edit'=>'Редагувати',
+    'delete'=>'Видалити',
+    'action'=>'Дія',
+    'main_category'=>'Головна категорія',
+    'select_menu' => 'Відкрити це меню вибору',
+    'select_category' => 'Виберіть категорію',
+    'status'=>'Статус',
+    'product'=>'Товар',
+    'deactivate'=>'Ні активний',
+    'active' => 'Активний',
+    'gallery'=>'Галерея',
+    'add_to_gallery'=>'Додати до галереї'
 ];

@@ -63,7 +63,7 @@ return [
     'city' => 'City',
     'send' => 'Send',
     'edit_to_back' => 'To edit, click on "Back"',
-    'to_back' => 'Go back',
+    'to_back' => 'Back',
     'payment_to_card' => 'Pay by card',
     'input_to_card' => 'Enter card number',
     'input_cvv' => 'Enter CVV',
@@ -83,5 +83,18 @@ return [
     'current_password' => 'Current password',
     'new_password' => 'New password',
     'custom_products' => 'Order products:',
+    'add' => 'Add',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'action' => 'Action',
+    'main_category' => 'Main category',
+    'select_menu' => 'Open this select menu',
+    'select_category' => 'Select category',
+    'status'=>'Status',
+    'product'=>'Product',
+    'deactivate'=>'No active',
+    'active'=>'Active',
+    'gallery'=>'Gallery',
+    'add_to_gallery'=>'Add to gallery'
 
 ];

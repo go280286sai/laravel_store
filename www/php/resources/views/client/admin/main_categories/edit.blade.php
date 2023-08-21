@@ -1,43 +1,48 @@
 @extends('client.layouts.layout')
 
 @section('content')
-    <?php $lang = \App\Models\Language::getStatus()->id; ?>
     <div class="container">
-        <table class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>id</th>
-                <th><img src="{{env('APP_URL')}}/assets/img/en.png" alt="Ukraine"/></th>
-                <th><img src="{{env('APP_URL')}}/assets/img/uk.png" alt="Ukraine"/></th>
-                <th><img src="{{env('APP_URL')}}/assets/img/ru.png" alt="Ukraine"/></th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <form action="/admin/main_categories/{{$main->id}}" method="post">
-                @method('PUT')
-                @csrf
-                <tr>
-                    <td>
-                        {{$main->id}}
-                    </td>
-                    @foreach($main->main_descriptions as $main_description)
-                        <td>
-                            <input name="main_description_{{$main_description->language_id}}" type="text" value="{{$main_description->title}}">
-                        </td>
-                    @endforeach
-                    <td>
-                        <input type="submit" class="btn btn-success" value="Обновить">
-                    </td>
-                </tr>
-            </form>
-            </tbody>
-        </table>
+        @include('layouts.errors')
+        <form action="/admin/main_categories/{{$main[0]->id}}" method="post">
+            @method('PUT')
+            @csrf
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/en.png" alt="English"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_1" class="form-label">Title</label>
+                <input type="text" name="main_description_1" placeholder="Title" class="form-control"
+                       id="main_description_1" aria-describedby="emailHelp" value="{{$main[0]->title}}">
+                <div id="emailHelp" class="form-text">Name of category</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/uk.png" alt="Ukraine"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_2" class="form-label">Назва</label>
+                <input type="text" name="main_description_2" placeholder="Назва" class="form-control"
+                       id="main_description_2" aria-describedby="emailHelp" value="{{$main[1]->title}}">
+                <div id="emailHelp" class="form-text">Назва категорії</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><img src="{{env('APP_URL')}}/assets/img/ru.png" alt="Russian"/></label>
+            </div>
+            <div class="mb-3">
+                <label for="main_description_3" class="form-label">Название</label>
+                <input type="text" name="main_description_3" placeholder="Название" class="form-control"
+                       id="main_description_3" aria-describedby="emailHelp" value="{{$main[2]->title}}">
+                <div id="emailHelp" class="form-text">Название категории</div>
+            </div>
+            <button type="submit" class="btn btn-primary">{{__('messages.update')}}</button>
+        </form>
+
         <br>
-        <a href="/admin/main_categories"><div class="btn btn-danger">Назад</div></a>
+        <a href="{{env('APP_URL')}}/admin/main_categories">
+            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+        </a>
     </div>
 
-    @section('js')
-    @endsection
 @endsection
 
+@section('js')
+@endsection

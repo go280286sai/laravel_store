@@ -83,5 +83,17 @@ return [
     'current_password' => 'Текущий пароль',
     'new_password' => 'Новый пароль',
     'custom_products' => 'Заказ товаров:',
-
+    'add' => 'Добавить',
+    'edit' => 'Изменить',
+    'delete' => 'Удалить',
+    'action' => 'Действие',
+    'main_category' => 'Главная категория',
+    'select_menu' => 'Открыть это меню выбора',
+    'select_category' => 'Выберите категорию',
+    'status' => 'Статус',
+    'product' => 'Товар',
+    'deactivate' => 'Не активный',
+    'active' => 'Активный',
+    'gallery'=>'Галлерея',
+    'add_to_gallery'=>'Добавить в галлерею'
 ];

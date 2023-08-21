@@ -77,7 +77,6 @@ class CategoryController extends Controller
         return view('client.admin.categories.edit',
             [
                 'categories' => $categories,
-                'langs' => Language::all(),
                 'mains' => $mains,
             ]);
     }
