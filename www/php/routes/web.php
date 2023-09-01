@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MainCategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\IsAuthMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
@@ -89,18 +93,30 @@ Route::get('/cart_reload', function () {
     return 0;
 });
 //------------------------------------------------------------------
-Route::prefix('admin')->middleware([\App\Http\Middleware\IsAdminMiddleware::class, \App\Http\Middleware\IsAuthMiddleware::class])->group(function () {
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/main_categories', MainCategoryController::class);
-    Route::resource('/products', AdminProductController::class);
-    Route::get('/products/status/{id}', [AdminProductController::class, 'status'])->name('admin.products.status');
-    Route::post('/gallery', [AdminProductController::class, 'gallery'])->name('admin.gallery');
-    Route::get('/gallery/{id}/delete', [AdminProductController::class, 'delete_gallery'])->name('admin.gallery.delete');
-    Route::post('/add_gallery', [AdminProductController::class, 'add_gallery'])->name('admin.add_gallery');
-});
+Route::prefix('admin')->middleware([IsAuthMiddleware::class, IsAdminMiddleware::class])->group(function () {
+
+})
+    ->group(function () {
+        Route::resource('/categories', CategoryController::class);
+        Route::resource('/main_categories', MainCategoryController::class);
+        Route::resource('/products', AdminProductController::class);
+        Route::get('/products/status/{id}', [AdminProductController::class, 'status'])->name('admin.products.status');
+        Route::post('/gallery', [AdminProductController::class, 'gallery'])->name('admin.gallery');
+        Route::get('/gallery/{id}/delete', [AdminProductController::class, 'delete_gallery'])->name('admin.gallery.delete');
+        Route::post('/add_gallery', [AdminProductController::class, 'add_gallery'])->name('admin.add_gallery');
+        Route::resource('/orders', OrderController::class);
+        Route::resource('/users', UserController::class);
+        Route::get('/users/status/{id}', [UserController::class, 'status'])->name('admin.users.status');
+        Route::get('/soft_deletes', [UserController::class, 'soft_deletes'])->name('admin.users.soft_deletes');
+        Route::post('/soft_delete_user', [UserController::class, 'soft_delete_user'])->name('admin.users.soft_delete_user');
+        Route::get('/user/comment/{id}', [UserController::class, 'comment'])->name('admin.users.comment');
+        Route::post('/user/add_comment', [UserController::class, 'add_comment'])->name('admin.users.add_comment');
+        Route::get('/user/email/{id}', [UserController::class, 'email'])->name('profile.email');
+        Route::post('/user/send_email', [UserController::class, 'send_email'])->name('profile.send_email');
+    });
 //------------------------------------------------------------------
 Route::get('/test', function () {
     echo phpinfo();
 
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

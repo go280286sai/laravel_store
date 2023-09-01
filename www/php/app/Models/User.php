@@ -3,17 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * @var string[]
@@ -42,6 +46,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * @return HasOne
+     */
+    public function user_comments(): HasOne
+    {
+        return $this->hasOne(User_comment::class);
+}
     /**
      * @return HasMany
      */
@@ -85,6 +96,63 @@ class User extends Authenticatable
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public static function status(int $id): void
+    {
+        $obj = self::find($id);
+        if ($obj->status == 1) {
+            $obj->status = 0;
+        } else {
+            $obj->status = 1;
+        }
+        $obj->save();
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public static function remove(int $id): void
+    {
+        DB::beginTransaction();
+        try {
+            $obj = self::find($id);
+            User_description::remove($id);
+            $obj->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+    }
+
+    public static function soft_remove($id): void
+    {
+        DB::beginTransaction();
+        try {
+            $obj=self::onlyTrashed()->find($id);
+            User_description::soft_delete($id);
+            $obj->forceDelete();
+            DB::commit();
+        }catch (Exception $e){
+            DB::rollBack();
+        }
+    }
+    public static function soft_recovery($id): void
+    {
+        DB::beginTransaction();
+        try {
+            $obj=self::onlyTrashed()->find($id);
+            User_description::soft_recovery($id);
+            $obj->restore();
+            DB::commit();
+        }catch (Exception $e){
+            DB::rollBack();
         }
     }
 }

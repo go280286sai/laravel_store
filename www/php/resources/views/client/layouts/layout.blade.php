@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{env('APP_URL')}}/assets/css/main.css">
     <link rel="icon" href="{{env('APP_URL')}}/assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    @section('style')
+    @show
     <meta name="keywords" content="Laravel Store::Ключові слова">
     <meta name="description" content="Laravel Store::Опис">
     <title>{{isset($title)?env('APP_NAME').'::'.$title:env('APP_NAME').'::'.__('messages.main')}}</title>

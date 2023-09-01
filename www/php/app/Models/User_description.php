@@ -39,11 +39,28 @@ class User_description extends Model
      */
     public static function set_update(int $id, array $data): true
     {
-
         $obj = self::find($id);
         $obj->fill($data);
         $obj->save();
 
         return true;
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public static function remove(int $id): void
+    {
+        self::where('user_id', $id)->delete();
+    }
+
+    public static function soft_delete(int $id): void
+    {
+        self::onlyTrashed()->where('user_id', $id)->first()->forceDelete();
+    }
+    public static function soft_recovery(int $id): void
+    {
+        self::onlyTrashed()->where('user_id', $id)->first()->restore();
     }
 }
