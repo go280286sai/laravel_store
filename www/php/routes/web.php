@@ -119,4 +119,4 @@ Route::get('/test', function () {
     echo phpinfo();
 
 });
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

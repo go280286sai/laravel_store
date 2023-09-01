@@ -91,7 +91,7 @@
 
         <br>
         <a href="{{env('APP_URL')}}/admin/categories">
-            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+            <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
         </a>
     </div>
 @endsection

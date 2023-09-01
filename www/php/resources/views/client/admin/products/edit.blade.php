@@ -127,7 +127,7 @@
         </form>
         <br>
         <a href="{{env('APP_URL')}}/admin/products">
-            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+            <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
         </a>
     </div>
     <div class="mt-3"><h3>{{__('messages.gallery')}}</h3></div>
@@ -140,8 +140,9 @@
                     <td><img src="{{\Illuminate\Support\Facades\Storage::url($gallery->img)}}" alt="" width="200px">
                     </td>
                     <td><input type="file" name="gallery[{{$gallery->id}}]"></td>
-                    <td><a href="/admin/gallery/{{$gallery->id}}/delete">
-                            <div class="btn btn-danger">{{__('messages.delete')}}</div>
+                    <td><a href="/admin/gallery/{{$gallery->id}}/delete" class="btn"
+                           onclick="return confirm('{{__('messages.are_you_sure')}}')" title="{{__('messages.remove')}}">
+                            <i class="fa fa-trash"></i>
                         </a></td>
                 </tr>
             @endforeach

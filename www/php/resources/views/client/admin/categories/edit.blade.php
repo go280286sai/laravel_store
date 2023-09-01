@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         @include('layouts.errors')
-        <form action="/admin/categories/{{$categories[0]->id}}" method="post">
+        <form action="{{env('APP_URL')}}/admin/categories/{{$categories[0]->id}}" method="post">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -94,8 +94,8 @@
         </form>
 
         <br>
-        <a href="/admin/categories">
-            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+        <a href="{{env('APP_URL')}}/admin/categories">
+            <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
         </a>
     </div>
 

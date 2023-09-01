@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         @include('layouts.errors')
-        <form action="/admin/products" method="post" enctype="multipart/form-data">
+        <form action="{{env('APP_URL')}}/admin/products" method="post" enctype="multipart/form-data">
             @csrf
             <img src="{{env('APP_URL')}}/assets/img/en.png" alt="English"/>
             <br>
@@ -101,8 +101,8 @@
             </div>
         </form>
         <br>
-        <a href="/admin/products">
-            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
+        <a href="{{env('APP_URL')}}/admin/products">
+            <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
         </a>
     </div>
 @endsection

@@ -10,22 +10,15 @@ class User_comment extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     public static function add_comment(array $data): void
     {
         $obj = self::where('user_id', $data['id'])->first();
-        if (!$obj){
+        if (! $obj) {
             $obj = new self();
         }
         $obj->user_id = $data['id'];

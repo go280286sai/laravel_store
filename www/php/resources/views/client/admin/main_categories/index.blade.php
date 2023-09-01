@@ -28,13 +28,15 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/main_categories/{{$main->id}}/edit"><div class="btn btn-success">{{__('messages.edit')}}</div></a>
+                                <td><a href="/admin/main_categories/{{$main->id}}/edit" class="btn"
+                                       title="{{__('messages.edit')}}"><i class="fa fa-edit"></i></a>
                                 </td>
                                 <td>
                                     <form action="/admin/main_categories/{{$main->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}" />
+                                        <button onclick="return confirm('{{__('messages.are_you_sure')}}')" class="btn"
+                                                title="{{__('messages.remove')}}"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

@@ -57,6 +57,7 @@ class MainCategoryController extends Controller
             ->select(['mains.id', 'main_descriptions.title'])
             ->where('main_id', $id)
             ->get();
+
         return view('/client/admin/main_categories/edit', ['main' => $main]);
     }
 

@@ -16,27 +16,16 @@ class User_description extends Model
      */
     protected $fillable = ['user_id', 'gender_id', 'last_name', 'birthday', 'phone'];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
     }
 
-    /**
-     * @param int $id
-     * @param array $data
-     * @return true
-     */
     public static function set_update(int $id, array $data): true
     {
         $obj = self::find($id);
@@ -46,10 +35,6 @@ class User_description extends Model
         return true;
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         self::where('user_id', $id)->delete();
@@ -59,6 +44,7 @@ class User_description extends Model
     {
         self::onlyTrashed()->where('user_id', $id)->first()->forceDelete();
     }
+
     public static function soft_recovery(int $id): void
     {
         self::onlyTrashed()->where('user_id', $id)->first()->restore();

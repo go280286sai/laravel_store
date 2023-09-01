@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Order_status_description;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CreateTitleOrdersStatusSeeder extends Seeder
@@ -16,7 +15,7 @@ class CreateTitleOrdersStatusSeeder extends Seeder
         $mas = [
             ['new', 'processing', 'completed', 'canceled'],
             ['новий', 'в обробці', 'завершено', 'відмінено'],
-            ["новый", "в обработке", "выполнен", "отменен"]
+            ['новый', 'в обработке', 'выполнен', 'отменен'],
         ];
         for ($j = 1; $j <= 3; $j++) {
             for ($i = 1; $i <= 4; $i++) {

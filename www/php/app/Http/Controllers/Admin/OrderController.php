@@ -17,11 +17,11 @@ class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return View
      */
     public function index(): View
     {
         $orders = Order::all();
+
         return view('client.admin.orders.index', ['orders' => $orders]);
     }
 
@@ -52,12 +52,13 @@ class OrderController extends Controller
             ->where('language_id', Language::getStatus()->id)
             ->first();
         $products = Order_product::where('order_id', $id)->get();
+
         return view('client.admin.orders.view',
             [
                 'order' => $order,
                 'client' => $client,
                 'service' => $service,
-                'products' => $products
+                'products' => $products,
             ]);
     }
 
@@ -76,13 +77,14 @@ class OrderController extends Controller
         $service = Delivery_description::where('delivery_id', $client->service)
             ->where('language_id', Language::getStatus()->id)
             ->first();
+
         return view('client.admin.orders.edit',
             [
                 'order' => $order,
                 'statuses' => $statuses,
                 'products' => $products,
                 'client' => $client,
-                'service' => $service
+                'service' => $service,
             ]);
     }
 
@@ -93,11 +95,11 @@ class OrderController extends Controller
     {
         $request->validate(
             [
-                'status' => 'required|numeric'
+                'status' => 'required|numeric',
             ]
         );
         $data = $request->all();
-        if ($data['status'] == 3 && !isset($data['delivery_number']) && is_null($data['delivery_number'])) {
+        if ($data['status'] == 3 && ! isset($data['delivery_number']) && is_null($data['delivery_number'])) {
             return Redirect::back()->withErrors(['delivery_number' => 'Введите номер накладной']);
         }
         Order::update_status($data, $id);

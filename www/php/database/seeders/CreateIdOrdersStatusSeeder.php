@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Order_status;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CreateIdOrdersStatusSeeder extends Seeder
@@ -13,7 +12,7 @@ class CreateIdOrdersStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i=0; $i<4; $i++){
+        for ($i = 0; $i < 4; $i++) {
             $obj = new Order_status();
             $obj->save();
         }

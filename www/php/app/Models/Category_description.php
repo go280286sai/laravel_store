@@ -10,27 +10,16 @@ class Category_description extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function languages(): BelongsTo
     {
         return $this->belongsTo(Language::class);
     }
 
-    /**
-     * @param array $data
-     * @param int $id
-     * @return void
-     */
     public static function set_update(array $data, int $id): void
     {
         for ($i = 1; $i <= 3; $i++) {
@@ -43,10 +32,6 @@ class Category_description extends Model
         }
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     public static function add(array $data): void
     {
         for ($i = 1; $i <= 3; $i++) {

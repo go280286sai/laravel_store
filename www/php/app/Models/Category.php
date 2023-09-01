@@ -11,42 +11,27 @@ class Category extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function mains(): BelongsTo
     {
         return $this->belongsTo(Main::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function category_descriptions(): HasMany
     {
         return $this->hasMany(Category_description::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    /**
-     * @param int $id
-     * @return object
-     */
     public static function get(int $id): object
     {
         return self::find($id);
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_main(int $id): array
@@ -62,8 +47,6 @@ class Category extends Model
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_path_category(int $id): array
@@ -78,19 +61,11 @@ class Category extends Model
         return $path;
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         self::find($id)->delete();
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     public static function add(array $data): void
     {
         $obj = new self();
@@ -100,11 +75,6 @@ class Category extends Model
         Category_description::add($data);
     }
 
-    /**
-     * @param int $id
-     * @param int $value
-     * @return void
-     */
     public static function set_update(int $id, int $value): void
     {
         $obj = self::find($id);

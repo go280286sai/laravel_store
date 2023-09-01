@@ -7,12 +7,12 @@
             <thead>
             <tr>
                 <th>id</th>
-                <th>User</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th>Total</th>
-                <th>Qty</th>
-                <th>Created</th>
+                <th>{{__('messages.name')}}</th>
+                <th>{{__('messages.status')}}</th>
+                <th>{{__('messages.description')}}</th>
+                <th>{{__('messages.sum')}}</th>
+                <th>{{__('messages.quantity')}}</th>
+                <th>{{__('messages.created')}}</th>
                 <th>{{__('messages.action')}}</th>
             </tr>
             </thead>
@@ -28,17 +28,18 @@
                         <td>{{$order->total}}</td>
                         <td>{{$order->qty}}</td>
                         <td>{{$order->created_at}}</td>
-
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/orders/{{$order->id}}/edit"><div class="btn btn-success">Просмотр</div></a>
+                                <td><a href="{{env('APP_URL')}}/admin/orders/{{$order->id}}/edit" class="btn" title="{{__('messages.edit')}}">
+                                        <i class="fa fa-search"></i></a>
                                 </td>
                                 <td>
-                                    <form action="/admin/orders/{{$order->id}}" method="post">
+                                    <form action="{{env('APP_URL')}}/admin/orders/{{$order->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}" />
+                                        <button onclick="return confirm('{{__('messages.are_you_sure')}}')" class="btn"
+                                                title="{{__('messages.remove')}}"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

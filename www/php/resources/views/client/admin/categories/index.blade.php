@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="btn_create">
-            <a href="/admin/categories/create">
+            <a href="{{env('APP_URL')}}/admin/categories/create">
                 <div class="btn btn-primary">{{__('messages.add')}}</div>
             </a>
         </div>
@@ -32,15 +32,17 @@
                     <td>
                         <table>
                             <tr>
-                                <td><a href="/admin/categories/{{$category->id}}/edit">
-                                        <div class="btn btn-success">{{__('messages.edit')}}</div>
+                                <td><a href="{{env('APP_URL')}}/admin/categories/{{$category->id}}/edit" class="btn"
+                                       title="{{__('messages.edit')}}">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="/admin/categories/{{$category->id}}" method="post">
+                                    <form action="{{env('APP_URL')}}/admin/categories/{{$category->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}"/>
+                                        <button onclick="return confirm('{{__('messages.are_you_sure')}}')" class="btn"
+                                                title="{{__('messages.remove')}}"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>

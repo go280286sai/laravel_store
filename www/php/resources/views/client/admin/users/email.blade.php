@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="box-footer mt-4">
-                        <a href="/admin/users">
+                        <a href="{{env('APP_URL')}}/admin/users">
                             <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
                         </a>
                         <input type="submit" class="btn btn-success pull-right" name="submit" value="{{__('messages.send')}}">

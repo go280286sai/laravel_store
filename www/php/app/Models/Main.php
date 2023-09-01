@@ -12,17 +12,11 @@ class Main extends Model
 {
     use HasFactory;
 
-    /**
-     * @return HasMany
-     */
     public function main_descriptions(): HasMany
     {
         return $this->hasMany(Main_description::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
@@ -30,6 +24,7 @@ class Main extends Model
 
     /**
      * @return Collection|mixed
+     *
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function list(): mixed
@@ -45,8 +40,6 @@ class Main extends Model
     }
 
     /**
-     * @param int $id
-     * @return string|null
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_title(int $id): ?string
@@ -61,19 +54,11 @@ class Main extends Model
         return null;
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         self::find($id)->delete();
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     public static function add(array $data): void
     {
         $obj = new self();

@@ -12,7 +12,6 @@ use App\Notifications\SendEmailUserNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -20,12 +19,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $users = User::join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
             ->select('users.id as id', 'users.name', 'user_descriptions.last_name',
                 'user_descriptions.phone', 'users.email', 'users.status')
             ->get();
+
         return view('client.admin.users.index', ['users' => $users]);
     }
 
@@ -50,13 +50,13 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-      //
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $user = User::join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
             ->select('users.id as id', 'user_descriptions.id as user_description_id', 'users.name', 'user_descriptions.last_name',
@@ -65,13 +65,14 @@ class UserController extends Controller
             ->first();
         $genders = Gender::all();
         $lang = Language::getStatus();
+
         return view('client.admin.users.edit', ['user' => $user, 'genders' => $genders, 'lang' => $lang]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string',
@@ -80,6 +81,7 @@ class UserController extends Controller
         $data['new_password'] = null;
         User::set_update($id, $data);
         User_description::set_update($data['user_description_id'], $data);
+
         return Redirect::back();
     }
 
@@ -89,28 +91,26 @@ class UserController extends Controller
     public function destroy(int $id): RedirectResponse
     {
         User::remove($id);
+
         return Redirect::back();
     }
 
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     */
     public function status(int $id): RedirectResponse
     {
         User::status($id);
+
         return Redirect::back();
     }
 
-    public function soft_deletes()
+    public function soft_deletes(): View
     {
         $users = User::onlyTrashed()->get();
+
         return view('client.admin.users.soft_deletes', ['users' => $users]);
     }
 
-    public function soft_delete_user(Request $request)
+    public function soft_delete_user(Request $request): RedirectResponse
     {
-
         $id = $request->get('user_id');
         $target = $request->get('target');
         match (true) {
@@ -120,24 +120,17 @@ class UserController extends Controller
             $target == 'recover_all' => self::recovery_all(User::onlyTrashed()->get('id')),
             default => null
         };
+
         return Redirect::back();
     }
 
-    /**
-     * @param object $data
-     * @return void
-     */
     public static function delete_all(object $data): void
     {
         foreach ($data as $item) {
-            User::soft_delete($item->id);
+            User::soft_remove($item->id);
         }
     }
 
-    /**
-     * @param object $data
-     * @return void
-     */
     public static function recovery_all(object $data): void
     {
         foreach ($data as $item) {
@@ -145,25 +138,17 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function add_comment(Request $request): RedirectResponse
     {
         $request->validate([
             'content' => 'required|string',
-            'id' => 'required|integer'
+            'id' => 'required|integer',
         ]);
         User_comment::add_comment($request->all());
 
         return Redirect::back();
     }
 
-    /**
-     * @param int $id
-     * @return View
-     */
     public function comment(int $id): View
     {
         $user = User::find($id);
@@ -175,19 +160,21 @@ class UserController extends Controller
     public function email(int $id): View
     {
         $user = User::find($id);
+
         return view('client.admin.users.email', ['user' => $user]);
     }
 
     public function send_email(Request $request): RedirectResponse
     {
         $request->validate([
-            'title'=>'required|string',
-            'content'=>'required|string',
-            'id'=>'required|integer',
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'id' => 'required|integer',
         ]);
         $data = $request->all();
         $user = User::find($data['id']);
         $user->notify(new SendEmailUserNotification($data['content'], $data['title']));
+
         return Redirect::back();
     }
 }

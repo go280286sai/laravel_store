@@ -46,39 +46,26 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    /**
-     * @return HasOne
-     */
     public function user_comments(): HasOne
     {
         return $this->hasOne(User_comment::class);
-}
-    /**
-     * @return HasMany
-     */
+    }
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function user_descriptions(): HasMany
     {
         return $this->hasMany(User_description::class);
     }
 
-    /**
-     * @param int $id
-     * @param array $data
-     * @return true
-     */
     public static function set_update(int $id, array $data): true
     {
         $obj = self::find($id);
         $obj->fill($data);
-        if (!is_null($data['new_password'])) {
+        if (! is_null($data['new_password'])) {
             $obj->password = Hash::make($data['new_password']);
         }
         $obj->save();
@@ -86,9 +73,6 @@ class User extends Authenticatable
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public static function is_admin(): bool
     {
         $admin = self::find(Auth::user()->id);
@@ -99,10 +83,6 @@ class User extends Authenticatable
         }
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function status(int $id): void
     {
         $obj = self::find($id);
@@ -114,10 +94,6 @@ class User extends Authenticatable
         $obj->save();
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         DB::beginTransaction();
@@ -135,23 +111,24 @@ class User extends Authenticatable
     {
         DB::beginTransaction();
         try {
-            $obj=self::onlyTrashed()->find($id);
+            $obj = self::onlyTrashed()->find($id);
             User_description::soft_delete($id);
             $obj->forceDelete();
             DB::commit();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
         }
     }
+
     public static function soft_recovery($id): void
     {
         DB::beginTransaction();
         try {
-            $obj=self::onlyTrashed()->find($id);
+            $obj = self::onlyTrashed()->find($id);
             User_description::soft_recovery($id);
             $obj->restore();
             DB::commit();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
         }
     }

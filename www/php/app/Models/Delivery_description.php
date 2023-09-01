@@ -10,17 +10,11 @@ class Delivery_description extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function delivery(): BelongsTo
     {
         return $this->belongsTo(Delivery::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);

@@ -37,9 +37,11 @@
         </form>
 
         <br>
-        <a href="{{env('APP_URL')}}/admin/main_categories">
-            <div class="btn btn-danger">{{__('messages.to_back')}}</div>
-        </a>
+        <div class="box-footer mt-4">
+            <a href="{{env('APP_URL')}}/admin/main_categories">
+                <div class="btn btn-danger" title="{{__('messages.to_back')}}"><-----</div>
+            </a>
+        </div>
     </div>
 
 @endsection

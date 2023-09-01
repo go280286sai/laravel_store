@@ -3,12 +3,15 @@
 @section('content')
     <div class="container">
         <div class="btn_create">
-            <a href="{{env('APP_URL')}}/admin/products/create"><div class="btn btn-primary">Добавить</div></a>
+            <a href="{{env('APP_URL')}}/admin/products/create">
+                <div class="btn btn-primary">{{__('messages.add')}}</div>
+            </a>
         </div>
         <table id="example" class="display" style="width:100%">
             <thead>
             <tr>
-                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png" alt="{{$lang->title}}"/>&nbsp;{{__('messages.product')}}</th>
+                <th><img src="{{env('APP_URL')}}/assets/img/{{$lang->code}}.png"
+                         alt="{{$lang->title}}"/>&nbsp;{{__('messages.product')}}</th>
                 <th>{{__('messages.price')}}</th>
                 <th>{{__('messages.quantity')}}</th>
                 <th>Image</th>
@@ -22,12 +25,15 @@
             @foreach($products as $product)
                 <tr>
                     <td>
-                                {{$product->title}}
-                    </td><td>
-                                {{$product->price}}
-                    </td><td>
-                                {{$product->amount}}
-                    </td><td>
+                        {{$product->title}}
+                    </td>
+                    <td>
+                        {{$product->price}}
+                    </td>
+                    <td>
+                        {{$product->amount}}
+                    </td>
+                    <td>
                         <img src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}" alt="" width="50px">
                     </td>
                     <td>
@@ -35,24 +41,30 @@
                     </td>
                     <td>
                         @if($product->status == 1)
-                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}"><div class="btn btn-success">{{__('messages.active')}}</div></a>
+                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}" class="btn"
+                               title="{{__('messages.active')}}">
+                                <i class="fa fa-unlock"></i></a>
                         @else
-                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}"><div class="btn btn-danger">{{__('messages.deactivate')}}</div></a>
+                            <a href="{{env('APP_URL')}}/admin/products/status/{{$product->id}}" class="btn"
+                               title="{{__('messages.deactivate')}}">
+                                <i class="fa fa-lock"></i></a></a>
                         @endif
                     </td>
                     <td>
                         <table>
                             <tr>
-                                <td><a href="{{env('APP_URL')}}/admin/products/{{$product->id}}/edit"><div class="btn btn-success">{{__('messages.edit')}}</div></a>
+                                <td><a href="{{env('APP_URL')}}/admin/products/{{$product->id}}/edit" class="btn"
+                                       title="{{__('messages.edit')}}">
+                                        <i class="fa fa-edit"></i></a>
                                 </td>
                                 <td>
                                     <form action="{{env('APP_URL')}}/admin/products/{{$product->id}}" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <input type="submit" class="btn btn-danger" value="{{__('messages.delete')}}" />
+                                        <button onclick="return confirm('{{__('messages.are_you_sure')}}')" class="btn"
+                                                title="{{__('messages.remove')}}"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </td>
-
                             </tr>
                         </table>
                     </td>

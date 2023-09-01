@@ -3,14 +3,15 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class DeliveryNumberNotification extends Notification
 {
     use Queueable;
+
     protected string $deliveryNumber;
+
     /**
      * Create a new notification instance.
      */
@@ -35,10 +36,10 @@ class DeliveryNumberNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->view('mails.delivery_number', ['deliveryNumber' => $this->deliveryNumber])
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->view('mails.delivery_number', ['deliveryNumber' => $this->deliveryNumber])
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**

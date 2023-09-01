@@ -16,26 +16,33 @@
 <div id="printableArea">
     <div class="container">
         <div class="row">
-            <h2>Заявка от {{$order->created_at}}</h2>
+            <h5>{{__('messages.created_order').': '. $order->created_at}}</h5>
         </div>
         <div class="mb-3">
             <table class="table table-bordered">
                 <tr>
-                    <td>Фамилия и имя покупателя</td>
+                    <td>{{__('messages.first_last_name')}}</td>
                     <td>{{$client->name. ' '. $client->last_name}}</td>
                 </tr>
                 <tr>
-                    <td>Номер телефона покупателя</td>
+                    <td>{{__('messages.phone')}}</td>
                     <td>{{$client->phone}}</td>
                 </tr>
                 <tr>
-                    <td>Служба доставки</td>
+                    <td>{{__('messages.delivery')}}</td>
                     <td>{{$service->title}}</td>
                 </tr>
                 <tr>
-                    <td>Адресс доставки</td>
+                    <td>{{__('messages.delivery_address')}}</td>
                     <td>{{$client->city.', '. $client->street}}</td>
                 </tr>
+                @if(isset($client->delivery_number))
+                    <tr>
+                        <td>{{__('messages.delivery_number').' '.\Illuminate\Support\Carbon::make($order->updated_at)
+                             ->format('d.m.Y')}}</td>
+                        <td>{{$client->delivery_number}}</td>
+                    </tr>
+                @endif
             </table>
         </div>
         <div class="mb-3">
@@ -43,19 +50,18 @@
                 <thead>
                 <tr>
                     <th>
-                        Product
+                        {{__('messages.product')}}
                     </th>
                     <th>
-                        Price
+                        {{__('messages.price')}}
                     </th>
                     <th>
-                        Qty
+                        {{__('messages.quantity')}}
                     </th>
                     <th>
-                        Sum
+                        {{__('messages.sum')}}
                     </th>
                 </tr>
-
                 </thead>
                 <tbody>
                 @foreach($products as $product)
@@ -72,16 +78,18 @@
         <div class="mb3">
             <table class="table">
                 <tr>
-                    <td>Директор: Иванов Иван Михайлович</td>
-                    <td>_____________________ <small>Подпись</small></td>
+                    <td>__________________________________________</td>
+                    <td>_____________________</td>
                 </tr>
             </table>
         </div>
-        <div class="mb-3">
-            <div class="no_print btn btn-primary" id="printButton" onclick=" window.print()">Распечатать</div>
-            <a href="{{env('APP_URL').'/admin/orders/'.$order->id.'/edit'}}">
-                <div class="no_print btn btn-danger">{{__('messages.to_back')}}</div>
-            </a>        </div>
+        <div class="mb-3 no_print">
+            <a href="{{env('APP_URL').'/admin/orders/'.$order->id.'/edit'}}" title="{{__('messages.to_back')}}">
+                <div class="btn btn-danger"><-----</div>
+            </a>
+            <div class="btn btn-primary" id="printButton" onclick=" window.print()">{{__('messages.print')}}</div>
+
+        </div>
     </div>
 
 </div>

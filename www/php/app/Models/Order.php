@@ -19,34 +19,21 @@ class Order extends Model
         'user_id', 'notes', 'status', 'total', 'qty',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function order_products(): HasMany
     {
         return $this->hasMany(Order_product::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function order_status(): BelongsTo
     {
         return $this->belongsTo(Order_status::class);
     }
 
-    /**
-     * @param array $data
-     * @return mixed
-     */
     public static function add(array $data): mixed
     {
         $obj = new self();
@@ -56,16 +43,11 @@ class Order extends Model
         return $obj->id;
     }
 
-    /**
-     * @param int $status
-     * @param int $id
-     * @return void
-     */
     public static function update_status(array $data, int $id): void
     {
         $obj = self::find($id);
         $obj->status_id = $data['status'];
-        if ($data['status'] == 3){
+        if ($data['status'] == 3) {
             $send = new self();
             $send->send_notification($obj->user_id, $data['delivery_number']);
         }
@@ -83,10 +65,6 @@ class Order extends Model
         $user->notify(new DeliveryNumberNotification($message));
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         self::find($id)->delete();

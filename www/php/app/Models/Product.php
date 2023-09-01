@@ -14,42 +14,27 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * @return BelongsTo
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function product_gallery(): HasMany
     {
         return $this->hasMany(Product_gallery::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function product_descriptions(): HasMany
     {
         return $this->hasMany(Product_description::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function order_products(): HasMany
     {
         return $this->hasMany(Order_product::class);
     }
 
     /**
-     * @param int $id
-     * @param int $qty
-     * @return string
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function add_to_cart(int $id, int $qty): string
@@ -83,8 +68,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function removeCart(int $id): void
@@ -98,9 +81,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @param int $qty
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function updateCart(int $id, int $qty): void
@@ -119,7 +99,6 @@ class Product extends Model
     }
 
     /**
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function translate(): void
@@ -142,8 +121,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_category(int $id): array
@@ -161,8 +138,6 @@ class Product extends Model
     }
 
     /**
-     * @param int $id
-     * @return array
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function get_path_product(int $id): array
@@ -181,7 +156,6 @@ class Product extends Model
     }
 
     /**
-     * @return void
      * @author Aleksander Storchak <go280286sai@gmail.com>
      */
     public static function clear(): void
@@ -189,10 +163,6 @@ class Product extends Model
         Session::remove('cart');
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function toggle(int $id): void
     {
         $obj = self::find($id);
@@ -200,11 +170,6 @@ class Product extends Model
         $obj->save();
     }
 
-    /**
-     * @param array $data
-     * @param $id
-     * @return void
-     */
     public static function set_update(array $data, $id): void
     {
         $obj = self::find($id);
@@ -217,16 +182,12 @@ class Product extends Model
         $obj->amount = $data['amount'];
         Product_description::set_update($data, $id);
         if (isset($data['img'])) {
-            Storage::delete('/uploads/img/' . $obj->img);
+            Storage::delete('/uploads/img/'.$obj->img);
             $obj->img = $data['img'];
         }
         $obj->save();
     }
 
-    /**
-     * @param array $data
-     * @return void
-     */
     public static function add(array $data): void
     {
         $obj = new self();
@@ -241,10 +202,6 @@ class Product extends Model
         Product_description::add($data, $obj->id);
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public static function remove(int $id): void
     {
         self::find($id)->delete();

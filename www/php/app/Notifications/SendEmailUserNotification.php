@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class SendEmailUserNotification extends Notification
     use Queueable;
 
     protected string $message;
+
     protected string $title;
 
     /**
@@ -39,7 +39,7 @@ class SendEmailUserNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->view('mails.send_email_user', ['messages'=>$this->message])
+            ->view('mails.send_email_user', ['messages' => $this->message])
             ->subject($this->title)
             ->line('The introduction to the notification.')
             ->action('Notification Action', url('/'))
