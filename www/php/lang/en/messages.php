@@ -114,5 +114,7 @@ return [
     'input_delivery_number' => 'Input delivery number',
     'view_user' => 'View user',
     'print' => 'Print',
+    'view' => 'View',
+    'feedback' => 'Feedback',
 
 ];

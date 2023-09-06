@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MainCategoryController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Client\OrderController as ClientOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsAuthMiddleware;
+use App\Http\Middleware\StatusMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
@@ -60,16 +62,16 @@ Route::controller(WishlistController::class)->group(function () {
 });
 //---------------------------------------------------------------------------
 //ProfileController
-Route::controller(ProfileController::class)->middleware('auth')->group(function () {
+Route::controller(ProfileController::class)->middleware([IsAuthMiddleware::class])->group(function () {
     Route::get('/client/dashboard', [ProfileController::class, 'index'])->name('profile.dashboard');
     Route::get('/client/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/client/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/client/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/client/callback', [ProfileController::class, 'callback'])->name('profile.callback');
-    Route::get('/client/history', [ProfileController::class, 'history'])->name('profile.history');
-    Route::get('/client/messages', [ProfileController::class, 'messages'])->name('profile.messages');
-    Route::get('/client/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+    Route::get('/client/callback', [ProfileController::class, 'feedback'])->name('profile.feedback');
+    Route::post('/client/send_feedback', [ProfileController::class, 'send_feedback'])->name('profile.send_feedback');
     Route::get('/client/index', [ProfileController::class, 'profile'])->name('profile.profile');
+    Route::get('/client/orders', [ClientOrderController::class, 'index'])->name('profile.orders');
+    Route::get('/client/orders/{id}/view', [ClientOrderController::class, 'view'])->name('profile.orders.view');
 });
 //----------------------------------------------------------------------------
 //Page is not found

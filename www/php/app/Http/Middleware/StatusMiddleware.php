@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAuthMiddleware
+class StatusMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,8 +16,9 @@ class IsAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->check()) {
-            return redirect()->route('login');
+        if ($request->user()->status == 0) {
+            return redirect()->route('login')->withErrors('Access error ');
+
         }
         return $next($request);
     }

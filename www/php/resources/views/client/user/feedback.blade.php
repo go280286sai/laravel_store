@@ -1,4 +1,4 @@
 @extends('client.layouts.layout')
 @section('content')
-    callback
+    @include('layouts.feedback')
 @endsection

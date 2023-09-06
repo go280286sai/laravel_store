@@ -15,7 +15,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/logout">messages.logout</a></li>
+                                <a class="dropdown-item" href="/logout">{{__('messages.logout')}}</a></li>
                         </ul>
                     </div>
                     <input type="hidden" name="lang" id="lang" value="uk">
