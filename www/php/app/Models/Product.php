@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -170,6 +172,11 @@ class Product extends Model
         $obj->save();
     }
 
+    /**
+     * @param array $data
+     * @param $id
+     * @return void
+     */
     public static function set_update(array $data, $id): void
     {
         $obj = self::find($id);
@@ -188,20 +195,28 @@ class Product extends Model
         $obj->save();
     }
 
+    /**
+     * @param array $data
+     * @return void
+     */
     public static function add(array $data): void
     {
-        $obj = new self();
-        $obj->category_id = $data['category'];
-        $obj->slug = Str::slug($data['title_1']);
-        $obj->price = $data['new_price'];
-        $obj->amount = $data['amount'];
-        $obj->img = $data['img'];
-        $obj->status = 1;
-        $obj->hit = 0;
-        $obj->save();
-        Product_description::add($data, $obj->id);
+            $obj = new self();
+            $obj->category_id = $data['category'];
+            $obj->slug = Str::slug($data['title_1']);
+            $obj->price = $data['new_price'];
+            $obj->amount = $data['amount'];
+            $obj->img = $data['img'];
+            $obj->status = 1;
+            $obj->hit = 0;
+            $obj->save();
+            Product_description::set_update($data, $obj->id);
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public static function remove(int $id): void
     {
         self::find($id)->delete();
