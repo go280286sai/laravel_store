@@ -65,7 +65,7 @@ class User extends Authenticatable
     {
         $obj = self::find($id);
         $obj->fill($data);
-        if (! is_null($data['new_password'])) {
+        if (!is_null($data['new_password'])) {
             $obj->password = Hash::make($data['new_password']);
         }
         $obj->save();
@@ -111,7 +111,7 @@ class User extends Authenticatable
     {
         DB::beginTransaction();
         try {
-            $obj = self::onlyTrashed()->find($id);
+            $obj = self::onlyTrashed()->where('id', $id)->first();
             User_description::soft_delete($id);
             $obj->forceDelete();
             DB::commit();

@@ -40,27 +40,18 @@ class Category extends Model
         $arr = [];
         $arr['main_id'] = $obj->main_id;
         foreach ($obj->category_descriptions as $item) {
-            $arr['title_category'] = $item->title;
+            if($item->language_id == Language::getStatus()->id){
+                $arr['title_category'] = $item->title;
+            }
         }
 
         return $arr;
     }
 
     /**
-     * @author Aleksander Storchak <go280286sai@gmail.com>
+     * @param int $id
+     * @return void
      */
-    public static function get_path_category(int $id): array
-    {
-        $path = [];
-        $path['category_id'] = $id;
-        $category = Category::get_main($id);
-        $path['main_id'] = $category['main_id'];
-        $path['title_category'] = $category['title_category'];
-        $path['title_main'] = Main::get_title($category['main_id']);
-
-        return $path;
-    }
-
     public static function remove(int $id): void
     {
         self::find($id)->delete();

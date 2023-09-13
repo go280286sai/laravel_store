@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Category_description;
 use App\Models\Language;
 use App\Models\Main;
+use App\Models\Main_description;
 use App\Models\Product;
+use App\Models\Product_description;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -37,12 +40,21 @@ class ProductController extends Controller
      */
     public function category(int $id): View
     {
-        $categories = Category::find($id);
-        $path = Category::get_path_category($categories->id);
-
+        $category = Category_description::join('categories', 'categories.id', '=', 'category_descriptions.category_id')
+        ->where('category_descriptions.language_id', Language::getStatus()->id)->where('categories.id', $id)->first();
+        $main = Main_description::where('language_id', Language::getStatus()->id)
+            ->where('main_id', $category->main_id)
+            ->first();
+        $products = Product_description::join('products', 'products.id', '=', 'product_descriptions.product_id')
+            ->where('language_id', Language::getStatus()->id)
+            ->where('products.status', 1)
+            ->where('category_id', $id)
+            ->paginate(6);
+        
         return view('products.category', [
-            'categories' => $categories,
-            'path' => $path,
+            'category' => $category,
+            'main' => $main,
+            'products' => $products,
         ]);
     }
 

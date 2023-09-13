@@ -1,74 +1,64 @@
 @extends('layouts.layout')
 
 @section('content')
-    <?php $lang = \App\Models\Language::getStatus()->id; ?>
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-light p-2">
                 <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/parent/'.$path['main_id']}}">
-                        {{$path['title_main']}}
+                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/parent/'.$main->main_id}}">
+                        {{$main->title}}
                     </a></li>
-
-                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/category/'.$path['category_id']}}">
-                        {{$path['title_category']}}
+                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/category/'.$category->id}}">
+                        {{$category->title}}
                     </a></li>
             </ol>
         </nav>
     </div>
-    <div class="container">
-        <table id="example" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>{{__('messages.title')}}</th>
-                <th>{{__('messages.category')}}</th>
-                <th>{{__('messages.old_price')}}</th>
-                <th>{{__('messages.new_price')}}</th>
-                <th>{{__('messages.is_set')}}</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            @foreach($categories->category_descriptions as $category)
-                @foreach($categories->products as $product)
-                    @foreach($product->product_descriptions as $product_description)
-                        @if($category->language_id == $lang && $product_description->language_id==$lang)
-                            <td>
-                                <a href="/product/{{$product->slug}}">{{$product_description->title}}</a>
-                            </td>
-                            <td>
-                                {{$category->title}}</td>
-                            <td>{{$product->old_price}}</td>
-                            <td>{{$product->price}}</td>
-                            <td>
-                                @if($product->status == 1)
-                                    <i class="fas fa-check text-success"></i>
-                                @else
-                                    <i class="fas fa-shipping-fast text-muted"></i>
-                                @endif
-                            </td>
-                            </tr>
-                        @endif
-                    @endforeach
+    <section class="featured-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="section-title">Товари категорії {{$category->title}}</h3>
+                </div>
+                @foreach($products as $product)
+                    <div class="col-lg-4 col-sm-6 mb-3">
+                        <div class="product-card">
+                            <div class="product-tumb">
+                                <a href="/product/{{$product->slug}}"><img
+                                        src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
+                                        alt=""></a>
+                            </div>
+                                    <div class="product-details">
+                                        <h4><a href="/product/{{$product->slug}}">{{$product->title}}</a></h4>
+                                        <p>{{$product->exerpt}}</p>
+                                        <div class="product-bottom-details d-flex justify-content-between">
+                                            <div class="product-price">
+                                                <small>{{$product->old_price>0?$product->old_price:''}}</small>{{$product->price}}
+                                            </div>
+                                            <input type="hidden" id="input-quantity" value="1">
+                                            <div class="product-links">
+                                                <a href="/cart/add?id={{$product->id}}&qty=1" class="add-to-cart"
+                                                   data-id="{{$product->id}}"><i class="fas fa-shopping-cart"
+                                                                                 title="{{__('messages.add_to_cart')}}"></i></a>
+                                                <a href="/wishlist/add?id={{$product->id}}"><i
+                                                        class="add_to_favorite far fa-heart "
+                                                        data-id="{{$product->id}}"
+                                                        title="{{__('messages.to_favorite')}}"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                    </div>
                 @endforeach
-                <tr>
-            @endforeach
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>{{__('messages.title')}}</th>
-                <th>{{__('messages.category')}}</th>
-                <th>{{__('messages.old_price')}}</th>
-                <th>{{__('messages.new_price')}}</th>
-                <th>{{__('messages.is_set')}}</th>
-            </tr>
-            </tfoot>
-        </table>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">{{ $products->links() }}</div>
+
     </div>
-    @section('js')
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script>
-            new DataTable('#example');
-        </script>
-    @endsection
+
+@endsection
+@section('js')
+
 @endsection

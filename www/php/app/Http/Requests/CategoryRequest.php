@@ -23,17 +23,14 @@ class CategoryRequest extends FormRequest
     {
         return [
             'main' => 'required|numeric',
-            'id_1' => 'nullable|numeric',
             'title_1' => 'required|string',
             'description_1' => 'required|string',
             'keywords_1' => 'required|string',
             'content_1' => 'required|string',
-            'id_2' => 'nullable|numeric',
             'title_2' => 'required|string',
             'description_2' => 'required|string',
             'keywords_2' => 'required|string',
             'content_2' => 'required|string',
-            'id_3' => 'nullable|numeric',
             'title_3' => 'required|string',
             'description_3' => 'required|string',
             'keywords_3' => 'required|string',
