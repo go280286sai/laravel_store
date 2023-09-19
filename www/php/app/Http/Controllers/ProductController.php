@@ -9,7 +9,8 @@ use App\Models\Main;
 use App\Models\Main_description;
 use App\Models\Product;
 use App\Models\Product_description;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
+
 
 class ProductController extends Controller
 {
@@ -20,7 +21,7 @@ class ProductController extends Controller
      */
     public function view(string $slug): View
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::where('id', $slug)->first();
         if ($product == null) {
             abort(404);
         }
@@ -50,7 +51,7 @@ class ProductController extends Controller
             ->where('products.status', 1)
             ->where('category_id', $id)
             ->paginate(6);
-        
+
         return view('products.category', [
             'category' => $category,
             'main' => $main,

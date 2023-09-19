@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use go280286sai\search_json\Json\JsonModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product_description extends Model
 {
-    use HasFactory;
+    use HasFactory, JsonModel;
+
+    /**
+     * @var array
+     */
+    private static array $select_fields = ['title', 'product_id', 'language_id', 'content'];
 
     /**
      * @return BelongsTo

@@ -11,7 +11,7 @@
                 <li class="breadcrumb-item"><a href="{{env('APP_URL').'/category/'.$path['category_id']}}">
                         {{$path['title_category']}}
                     </a></li>
-                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/product/'.$product->slug}}">
+                <li class="breadcrumb-item"><a href="{{env('APP_URL').'/product/'.$product->id}}">
                         {{$path['title_product']}}
                     </a></li>
 

@@ -18,18 +18,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="section-title">Товари категорії {{$category->title}}</h3>
+                    <h3 class="section-title">{{$category->title}}</h3>
                 </div>
                 @foreach($products as $product)
                     <div class="col-lg-4 col-sm-6 mb-3">
                         <div class="product-card">
                             <div class="product-tumb">
-                                <a href="/product/{{$product->slug}}"><img
+                                <a href="/product/{{$product->id}}"><img
                                         src="{{\Illuminate\Support\Facades\Storage::url($product->img)}}"
                                         alt=""></a>
                             </div>
                                     <div class="product-details">
-                                        <h4><a href="/product/{{$product->slug}}">{{$product->title}}</a></h4>
+                                        <h4><a href="/product/{{$product->id}}">{{$product->title}}</a></h4>
                                         <p>{{$product->exerpt}}</p>
                                         <div class="product-bottom-details d-flex justify-content-between">
                                             <div class="product-price">

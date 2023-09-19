@@ -9,9 +9,10 @@
                     </a>
                 </div>
                 <div class="col text-end icons">
-                    <form>
+                    <form action="{{env('APP_URL')}}/main/search" method="post">
                         <div class="input-group" id="search">
-                            <input type="text" class="form-control" placeholder="{{__('messages.search')}}..." name="s">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="{{__('messages.search')}}..." name="text">
                             <button class="btn close-search" type="button"><i class="fas fa-times"></i></button>
                             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                         </div>
