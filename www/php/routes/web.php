@@ -44,6 +44,7 @@ Route::controller(CartController::class)->group(function () {
 //Main controller
 Route::controller(\App\Http\Controllers\MainController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::post('/main/search', 'search')->name('search');
 });
 //----------------------------------------------------------------------------
 //Product controller

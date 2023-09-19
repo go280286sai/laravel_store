@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Language;
 use App\Models\Product;
 use App\Models\Slider;
+use go280286sai\search_json\Models\Index_search;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+
 
 class MainController extends Controller
 {
@@ -47,5 +50,16 @@ class MainController extends Controller
         }
 
         return $hit;
+    }
+
+    public function search(Request $request): \Illuminate\Contracts\View\View
+    {
+        $request->validate([
+            'text'=>'required|string',
+        ]);
+        $search = Index_search::search_text($request->input('text'));
+        $lang = Language::getStatus()->id;
+
+        return view('main.search', ['search' => $search, 'lang' => $lang]);
     }
 }
